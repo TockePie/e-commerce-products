@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
@@ -18,7 +16,7 @@ import styles from "./Navbar.styles";
 
 const Navbar = () => {
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "#3C8FDB" }}>
+    <AppBar>
       <Toolbar sx={styles.toolbar}>
         <Box sx={styles.leftBox}>
           <ShoppingBasketIcon sx={{ fontSize: 30 }} />
