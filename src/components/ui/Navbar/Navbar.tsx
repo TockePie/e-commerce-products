@@ -29,9 +29,9 @@ const Navbar = () => {
             <SearchIcon />
             Search
           </Button>
-          <IconButton aria-label="shopping-cart">
+          {/* <IconButton aria-label="shopping-cart">
             <ShoppingCartIcon sx={{ fontSize: 30, color: "white" }} />
-          </IconButton>
+          </IconButton> */}
         </Box>
       </Toolbar>
     </AppBar>

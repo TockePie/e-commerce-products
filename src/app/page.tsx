@@ -2,15 +2,10 @@ import { Suspense, lazy } from "react";
 import styles from "./page.module.css";
 import Loading from "./@products/loading";
 
-const ProductsPage = lazy(
-  () =>
-    new Promise<{ default: React.ComponentType }>((resolve) =>
-      setTimeout(
-        async () =>
-          resolve({ default: (await import("./@products/page")).default }),
-        3000
-      )
-    )
+const ProductsPage = lazy(() =>
+  import("./@products/page").then((module) => ({
+    default: module.default,
+  }))
 );
 
 export default function Home() {
