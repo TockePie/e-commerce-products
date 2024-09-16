@@ -7,24 +7,18 @@ import {
   Card,
   CardActionArea,
   CardContent,
-  CardMedia,
   Chip,
   Typography,
 } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
+import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
 
 import styles from "./Card.styles";
+import moduleStyles from "./Card.module.scss";
+import Image from "next/image";
 
 const ProductCard = ({ product }) => {
-  const calculateDiscountedPrice = (
-    price: number,
-    discountPercentage: number
-  ) => {
-    const discountedPrice = price - (price * discountPercentage) / 100;
-    return parseFloat(discountedPrice.toFixed(2));
-  };
-
   const discount = calculateDiscountedPrice(
     product.price,
     product.discountPercentage
@@ -34,10 +28,17 @@ const ProductCard = ({ product }) => {
     <Card sx={styles.card}>
       <CardActionArea sx={styles.actionArea}>
         <Suspense fallback={<div>Loading...</div>}>
-          <CardMedia
+          {/* <CardMedia
             component="img"
             sx={styles.media}
             image={product.images[0]}
+          /> */}
+          <Image
+            className={moduleStyles.productImage}
+            src={product.images[0]}
+            alt={product.title}
+            width={200}
+            height={200}
           />
         </Suspense>
         <CardContent>

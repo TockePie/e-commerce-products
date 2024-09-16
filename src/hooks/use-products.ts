@@ -3,14 +3,20 @@ import fetchData from "@/utils/fetchData";
 
 const useProducts = () => {
   const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => setProducts(await fetchData());
+    const fetchProducts = async () => {
+      setLoading(true);
+      const data = await fetchData();
+      setProducts(data);
+      setLoading(false);
+    };
 
     fetchProducts();
   }, []);
 
-  return products;
+  return { products, loading };
 };
 
 export default useProducts;

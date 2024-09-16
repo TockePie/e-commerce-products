@@ -1,18 +1,22 @@
 const styles = {
   card: {
     width: 400,
-    height: 250,
+    height: 200,
     "@media (max-width: 600px)": {
       width: 310,
     },
   },
   actionArea: {
     display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   media: {
     width: 200,
+    height: 200,
     "@media (max-width: 600px)": {
       width: 150,
+      height: 150,
     },
   },
   titleText: {
