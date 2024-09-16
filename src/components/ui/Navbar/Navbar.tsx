@@ -1,13 +1,11 @@
 import React from "react";
 
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   AppBar,
   Box,
   Button,
-  IconButton,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -29,9 +27,6 @@ const Navbar = () => {
             <SearchIcon />
             Search
           </Button>
-          {/* <IconButton aria-label="shopping-cart">
-            <ShoppingCartIcon sx={{ fontSize: 30, color: "white" }} />
-          </IconButton> */}
         </Box>
       </Toolbar>
     </AppBar>
