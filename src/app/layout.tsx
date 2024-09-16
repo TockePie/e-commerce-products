@@ -3,8 +3,6 @@ import localFont from "next/font/local";
 
 import Navbar from "@/components/ui/Navbar/Navbar";
 
-import { DeviceProvider } from "../state/DeviceContext";
-
 import "./globals.css";
 
 const geistSans = localFont({
@@ -31,10 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <DeviceProvider>
-          <Navbar />
-          {children}
-        </DeviceProvider>
+        <Navbar />
+        {children}
       </body>
     </html>
   );

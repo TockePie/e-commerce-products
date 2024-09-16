@@ -16,7 +16,7 @@ import styles from "./Navbar.styles";
 
 const Navbar = () => {
   return (
-    <AppBar>
+    <AppBar component="nav">
       <Toolbar sx={styles.toolbar}>
         <Box sx={styles.leftBox}>
           <ShoppingBasketIcon sx={{ fontSize: 30 }} />
