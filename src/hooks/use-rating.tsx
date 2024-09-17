@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { Box } from "@mui/material";
 
 const SIZES = {
   SMALL: { key: "s", size: 10 },
@@ -35,18 +36,18 @@ const useRating = (
   ) => {
     const StarComponent = (index: number) =>
       (showOutOf || index < nonFraction + 1) && (
-        <div style={{ position: "relative" }} key={index}>
-          <div
-            style={{
+        <Box sx={{ position: "relative" }} key={index}>
+          <Box
+            sx={{
               width: getStarFill(index),
               overflow: "hidden",
               position: "absolute",
             }}
           >
             {RatingHighlighted}
-          </div>
+          </Box>
           {RatingDefault}
-        </div>
+        </Box>
       );
 
     StarComponent.displayName = "StarComponent";

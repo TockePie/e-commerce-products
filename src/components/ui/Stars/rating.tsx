@@ -1,7 +1,11 @@
 import React from "react";
-import defaultClasses from "./rating.module.css";
+import { Box } from "@mui/material";
+
 import IconComponent from "./starsIcons";
+
 import useRating from "@/hooks/use-rating";
+
+import styles from "./rating.styles";
 
 const RatingComponent = ({
   iconSize,
@@ -22,11 +26,11 @@ const RatingComponent = ({
   );
 
   return (
-    <div className={defaultClasses.root}>
+    <Box sx={styles.root}>
       {[...Array(5)].map((_, index) =>
         renderStar(RatingHighlighted, RatingDefault)(index)
       )}
-    </div>
+    </Box>
   );
 };
 

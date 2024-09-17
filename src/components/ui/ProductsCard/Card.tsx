@@ -13,33 +13,24 @@ import {
 
 import Rating from "@/components/ui/Stars/rating";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
+import getTitleStyle from "@/utils/getTitleStyle";
 import ProductCardProps from "@/types/cardTypes";
 
 import styles from "./Card.styles";
 import moduleStyles from "./Card.module.scss";
-
-const titleStyle = {
-  titleText: {
-    fontSize: "1.2rem",
-  },
-  smallText: {
-    fontSize: "1rem",
-  },
-};
+import { useRouter } from "next/navigation";
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const router = useRouter();
+
   const discount = calculateDiscountedPrice(
     product.price,
     product.discountPercentage
   );
 
-  const getTitleStyle = (title: string) => {
-    return title.length > 20 ? titleStyle.smallText : titleStyle.titleText;
-  };
-
   return (
     <Card sx={styles.card}>
-      <CardActionArea sx={styles.actionArea}>
+      <CardActionArea sx={styles.actionArea} onClick={() => router.push(`/${product.id}`)}>
         <Suspense fallback={<div>Loading...</div>}>
           <Image
             className={moduleStyles.productImage}

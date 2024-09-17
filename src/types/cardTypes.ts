@@ -42,4 +42,6 @@ interface ProductCardProps {
   product: ProductType;
 }
 
+export type { ProductType };
+
 export default ProductCardProps;

@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const usePages = (items: any[], itemsPerPage: number) => {
+import ProductCardProps from "@/types/cardTypes";
+
+const usePages = (items: ProductCardProps[], itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(items.length / itemsPerPage);
