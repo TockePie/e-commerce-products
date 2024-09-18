@@ -27,6 +27,7 @@ const styles = {
 
     "@media (max-width: 768px)": {
       width: "100%",
+      marginTop: 6,
     },
   },
   ratingBox: {
