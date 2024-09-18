@@ -16,7 +16,7 @@ type ProductType = {
     height: number;
     depth: number;
   };
-  warrantyInformaton: string;
+  warrantyInformation: string;
   shippingInformation: string;
   availabilityStatus: "Low Stock" | "In Stock";
   reviews: {

@@ -1,14 +1,6 @@
-type IconType = 'ratingHighlighted' | 'ratingDefault';
+import { IconType, StarComponentType } from "@/types/ratingType";
 
-const IconComponent = ({
-  type,
-  width,
-  height,
-}: {
-  type: IconType;
-  width: number;
-  height: number;
-}) => {
+const IconComponent = ({ type, width, height }: StarComponentType) => {
   const imageDataSource: Record<IconType, JSX.Element> = {
     ratingHighlighted: (
       <svg
