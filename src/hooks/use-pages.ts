@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import ProductCardProps from "@/types/cardTypes";
 
 const usePages = (items: ProductCardProps[], itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const totalPages = useMemo(
+    () => Math.max(Math.ceil(items.length / Math.max(itemsPerPage, 1)), 1),
+    [items.length, itemsPerPage]
+  );
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -16,12 +19,14 @@ const usePages = (items: ProductCardProps[], itemsPerPage: number) => {
   };
 
   const handlePageClick = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+    setCurrentPage(() => Math.min(Math.max(pageNumber, 1), totalPages));
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = items.slice(startIndex, endIndex);
+  const currentItems = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return items.slice(startIndex, endIndex);
+  }, [items, currentPage, itemsPerPage]);
 
   return {
     currentPage,

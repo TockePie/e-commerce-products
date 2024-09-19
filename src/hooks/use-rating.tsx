@@ -7,6 +7,16 @@ const SIZES = {
   LARGE: { key: "l", size: 28 },
 };
 
+const styles = {
+  ratingBox: {
+    position: "relative",
+  },
+  highlightedBox: {
+    overflow: "hidden",
+    position: "absolute",
+  },
+};
+
 const useRating = (
   iconSize: string,
   ratingInPercent: number,
@@ -15,14 +25,12 @@ const useRating = (
   const nonFraction = Math.trunc(ratingInPercent);
   const fractionPercent = ((ratingInPercent - nonFraction) * 100).toFixed(2);
 
-  const sizeKey = useMemo(
-    () =>
-      Object.keys(SIZES).find(
-        (key: string) => SIZES[key as keyof typeof SIZES].key === iconSize
-      ) as keyof typeof SIZES,
-    [iconSize]
-  );
-  const size = SIZES[sizeKey].size;
+  const size = useMemo(() => {
+    const sizeKey = Object.keys(SIZES).find(
+      (key: string) => SIZES[key as keyof typeof SIZES].key === iconSize
+    ) as keyof typeof SIZES;
+    return SIZES[sizeKey].size;
+  }, [iconSize]);
 
   const getStarFill = (index: number) => {
     if (index < nonFraction) return "100%";
@@ -36,12 +44,11 @@ const useRating = (
   ) => {
     const StarComponent = (index: number) =>
       (showOutOf || index < nonFraction + 1) && (
-        <Box sx={{ position: "relative" }} key={index}>
+        <Box sx={styles.ratingBox} key={index}>
           <Box
             sx={{
               width: getStarFill(index),
-              overflow: "hidden",
-              position: "absolute",
+              ...styles.highlightedBox,
             }}
           >
             {RatingHighlighted}

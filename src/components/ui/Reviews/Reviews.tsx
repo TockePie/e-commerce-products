@@ -1,20 +1,16 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 
+import { ProductType } from "@/types/productTypes";
+
 import styles from "./Reviews.styles";
-import { ProductType } from "@/types/cardTypes";
 
 const Reviews = (data: ProductType) => {
   return (
-    <>
-      <Typography
-        variant="h5"
-        sx={{
-          textAlign: "center",
-          marginTop: 4,
-        }}
-      >
+    <Box sx={styles.mainBox}>
+      <Divider sx={styles.divider} />
+      <Typography variant="h5" sx={styles.reviewsText}>
         Reviews
       </Typography>
       <Box sx={styles.reviews}>
@@ -31,14 +27,7 @@ const Reviews = (data: ProductType) => {
               ...styles.reviewCard,
             }}
           >
-            <CardContent
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                height: "100%",
-              }}
-            >
+            <CardContent sx={styles.cardContent}>
               <Typography variant="h6">{review.comment}</Typography>
               <Box>
                 <Typography variant="body1">{review.reviewerName}</Typography>
@@ -52,7 +41,7 @@ const Reviews = (data: ProductType) => {
           </Card>
         ))}
       </Box>
-    </>
+    </Box>
   );
 };
 

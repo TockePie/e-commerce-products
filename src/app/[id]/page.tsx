@@ -1,31 +1,45 @@
 "use client";
 
+import React, { useMemo } from "react";
 import { Box, Divider, Typography } from "@mui/material";
 
 import Loading from "./loading";
-import ImageCarousel from "@/components/ui/ImageCarousel/ImageCarousel";
 import Rating from "@/components/ui/Stars/rating";
 
 import useProducts from "@/hooks/use-products";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
-import { ProductType } from "@/types/cardTypes";
+import { ProductType } from "@/types/productTypes";
 
 import styles from "./page.styles";
-import ProductsInfo from "@/components/ui/ProductsInfo/ProductsInfo";
-import Reviews from "@/components/ui/Reviews/Reviews";
+
+const ImageCarousel = React.lazy(
+  () => import("@/components/ui/ImageCarousel/ImageCarousel")
+);
+const ProductsInfo = React.lazy(
+  () => import("@/components/ui/ProductsInfo/ProductsInfo")
+);
+const Reviews = React.lazy(() => import("@/components/ui/Reviews/Reviews"));
 
 const ProductPage = ({ params }: { params: { id: number } }) => {
-  const { products, loading } = useProducts(params.id);
+  const { products, loading, error } = useProducts(params.id);
 
-  const product = products[0];
+  if (error) {
+    return (
+      <Typography variant="body1" color="error">
+        Failed to load product details.
+      </Typography>
+    );
+  }
+
+  const product = products.length > 0 ? products[0] : null;
 
   return <>{loading ? <Loading /> : <MainSection {...product} />}</>;
 };
 
 const MainSection = (data: ProductType) => {
-  const discount = calculateDiscountedPrice(
-    data.price,
-    data.discountPercentage
+  const discount = useMemo(
+    () => calculateDiscountedPrice(data.price, data.discountPercentage),
+    [data.price, data.discountPercentage]
   );
 
   return (

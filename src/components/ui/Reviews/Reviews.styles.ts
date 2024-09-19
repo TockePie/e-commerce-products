@@ -1,8 +1,16 @@
 const styles = {
+  mainBox: {
+    padding: "3rem",
+  },
+  divider: {
+    marginBottom: 4,
+  },
+  reviewsText: {
+    textAlign: "center",
+  },
   reviews: {
     display: "grid",
     justifyContent: "center",
-    padding: "0 3rem",
 
     "@media (max-width: 768px)": {
       padding: "0 1rem",
@@ -15,6 +23,12 @@ const styles = {
     textAlign: "center",
     width: 300,
     height: 200,
+  },
+  cardContent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    height: "100%",
   },
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box } from "@mui/material";
 
 import IconComponent from "./starsIcons";
@@ -15,16 +15,20 @@ const RatingComponent = ({
 }: RatingType) => {
   const { size, renderStar } = useRating(iconSize, ratingInPercent, showOutOf);
 
-  const RatingHighlighted = (
-    <IconComponent type="ratingHighlighted" width={size} height={size} />
+  const RatingHighlighted = useMemo(
+    () => <IconComponent type="ratingHighlighted" width={size} height={size} />,
+    [size]
   );
-  const RatingDefault = (
-    <IconComponent type="ratingDefault" width={size} height={size} />
+  const RatingDefault = useMemo(
+    () => <IconComponent type="ratingDefault" width={size} height={size} />,
+    [size]
   );
+
+  const starsArray = useMemo(() => [...Array(5)], []);
 
   return (
     <Box sx={styles.root}>
-      {[...Array(5)].map((_, index) =>
+      {starsArray.map((_, index) =>
         renderStar(RatingHighlighted, RatingDefault)(index)
       )}
     </Box>

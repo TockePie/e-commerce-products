@@ -9,6 +9,9 @@ const styles = {
     gap: "0.5rem",
     borderRadius: "2rem",
   },
+  shoppingBasket: {
+    fontSize: 30,
+  },
   typography: {
     "@media (max-width: 600px)": {
       display: "none",

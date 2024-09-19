@@ -8,7 +8,9 @@ import {
   tableCellClasses,
 } from "@mui/material";
 
-import { ProductType } from "@/types/cardTypes";
+import { ProductType } from "@/types/productTypes";
+
+import styles from "./ProductsInfo.styles";
 
 const ProductsInfo = (data: ProductType) => {
   const productDetails = [
@@ -33,22 +35,12 @@ const ProductsInfo = (data: ProductType) => {
             ({ key, value }) =>
               value && (
                 <TableRow key={key}>
-                  <TableCell
-                    sx={{
-                      padding: "0.5rem",
-                    }}
-                  >
+                  <TableCell sx={styles.tableCell}>
                     <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                       {key}
                     </Typography>
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      padding: "0.5rem",
-                    }}
-                  >
-                    {value}
-                  </TableCell>
+                  <TableCell sx={styles.tableCell}>{value}</TableCell>
                 </TableRow>
               )
           )}

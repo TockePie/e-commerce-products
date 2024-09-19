@@ -38,10 +38,10 @@ type ProductType = {
   thumbnail: string;
 };
 
-interface ProductCardProps {
+interface ProductProps {
   product: ProductType;
 }
 
 export type { ProductType };
 
-export default ProductCardProps;
+export default ProductProps;

@@ -1,11 +1,14 @@
+import { Box, Typography } from "@mui/material";
 import { BeatLoader } from "react-spinners";
+
+import styles from "@/app/page.styles";
 
 const Loading = () => {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-      <h1>Loading</h1>
+    <Box sx={styles.loadingPage}>
+      <Typography variant="h4">Loading</Typography>
       <BeatLoader size={10} loading={true} />
-    </div>
+    </Box>
   );
 };
 
