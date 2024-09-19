@@ -1,4 +1,4 @@
-import { red } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 
 const styles = {
   main: {
@@ -43,7 +43,7 @@ const styles = {
     color: red[500],
   },
   greenText: {
-    color: "green",
+    color: green[500],
   },
   description: {
     display: "flex",
