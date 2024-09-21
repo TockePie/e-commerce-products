@@ -51,6 +51,11 @@ const styles = {
     marginTop: 2,
     gap: 2,
   },
+  loadingPage: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1rem",
+  },
 };
 
 export default styles;

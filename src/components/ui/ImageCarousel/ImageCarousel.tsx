@@ -1,31 +1,15 @@
-import React, { useState, useMemo, useCallback, memo } from "react";
+import React, { useMemo, useCallback, memo } from "react";
 import { IconButton, Box } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
+import useImageCarousel from "@/hooks/use-image-carousel";
+import ImageCarouselProps from "@/types/imageCarouselType";
+
 import styles from "./ImageCarousel.styles";
 
-interface ImageCarouselProps {
-  images: string[];
-}
-
 const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleNext = useCallback(
-    () =>
-      setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      ),
-    [images.length]
-  );
-
-  const handlePrev = useCallback(
-    () =>
-      setCurrentIndex((prevIndex) =>
-        prevIndex === 0 ? images.length - 1 : prevIndex - 1
-      ),
-    [images.length]
-  );
+  const { currentIndex, handleNext, handlePrev, setCurrentIndex } =
+    useImageCarousel(images);
 
   const ImageComponent = useCallback(() => {
     return (
@@ -51,7 +35,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
           }}
         />
       )),
-    [images, currentIndex]
+    [images, currentIndex, setCurrentIndex]
   );
 
   if (images.length === 1)

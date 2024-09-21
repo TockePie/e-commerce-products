@@ -38,7 +38,6 @@ const ProductPage = ({ params }: { params: { id: number } }) => {
 };
 
 const MainSection = (data: ProductType) => {
-  console.log(data);
   const discount = useMemo(
     () => calculateDiscountedPrice(data.price, data.discountPercentage),
     [data.price, data.discountPercentage]
