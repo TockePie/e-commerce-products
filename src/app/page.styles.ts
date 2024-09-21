@@ -29,6 +29,17 @@ const styles = {
       marginRight: "5vw",
     },
   },
+  title: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "1rem",
+
+    "@media (max-width: 767px)": {
+      flexDirection: "column",
+      gap: "0.5rem",
+    },
+  },
   gridContainer: {
     alignItems: "center",
   },

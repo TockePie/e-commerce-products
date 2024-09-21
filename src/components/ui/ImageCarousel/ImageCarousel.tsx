@@ -3,6 +3,7 @@ import { IconButton, Box } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 import useImageCarousel from "@/hooks/use-image-carousel";
+import { imageCarousel } from "@/utils/constants";
 import ImageCarouselProps from "@/types/imageCarouselType";
 
 import styles from "./ImageCarousel.styles";
@@ -31,7 +32,10 @@ const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
           onClick={() => setCurrentIndex(index)}
           sx={{
             ...styles.dots,
-            backgroundColor: index === currentIndex ? "blue" : "gray",
+            backgroundColor:
+              index === currentIndex
+                ? imageCarousel.dotsColorActive
+                : imageCarousel.dotsColorInactive,
           }}
         />
       )),

@@ -1,29 +1,77 @@
 "use client";
 
-import { useMemo } from "react";
-import { ThemeProvider, Grid, Pagination, Box } from "@mui/material";
+import { useMemo, useState } from "react";
+import {
+  Button,
+  ThemeProvider,
+  Grid,
+  Pagination,
+  Box,
+  Typography,
+} from "@mui/material";
 
 import Loading from "./loading";
 import ProductCard from "@/components/ui/ProductsCard/Card";
+import DrawerComponent from "@/components/ui/Drawer/Drawer";
 
-import ProductProps from "@/types/productTypes";
+import { ProductType } from "@/types/productTypes";
+import filterProducts from "@/utils/filterProducts";
 import useProducts from "@/hooks/use-products";
 import usePages from "@/hooks/use-pages";
-import darkTheme from "@/components/darkTheme";
+import darkTheme from "@/utils/darkTheme";
 
 import styles from "./page.styles";
 
 export default function Home() {
   const { products, loading } = useProducts();
 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000]);
+  const [rating, setRating] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
+
+  const filteredProducts = useMemo(() => {
+    return filterProducts({
+      products,
+      selectedCategory,
+      priceRange,
+      rating,
+    });
+  }, [products, selectedCategory, priceRange, rating]);
+
+  const productCount = useMemo(
+    () => filteredProducts.length,
+    [filteredProducts]
+  );
+
   return (
     <Box component="main" sx={styles.main}>
-      {loading ? <Loading /> : <MainSection data={products} />}
+      {loading ? (
+        <Loading />
+      ) : (
+        <ThemeProvider theme={darkTheme}>
+          <DrawerComponent
+            open={open}
+            setOpen={setOpen}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            rating={rating}
+            setRating={setRating}
+          />
+          <Box sx={styles.title}>
+            <Typography variant="h4">Found {productCount} products</Typography>
+            <Button onClick={() => setOpen(true)}>Filter</Button>
+          </Box>
+          <MainSection data={filteredProducts} />
+        </ThemeProvider>
+      )}
     </Box>
   );
 }
 
-const MainSection = ({ data }: { data: ProductProps[] }) => {
+const MainSection = ({ data }: { data: ProductType[] }) => {
   const itemsPerPage = 10;
   const {
     currentPage,
@@ -32,11 +80,8 @@ const MainSection = ({ data }: { data: ProductProps[] }) => {
     handlePageClick,
   } = usePages(data, itemsPerPage);
 
-  const productCount = useMemo(() => data.length, [data]);
-
   return (
-    <ThemeProvider theme={darkTheme}>
-      <h1>Found {productCount} products</h1>
+    <>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
@@ -45,15 +90,15 @@ const MainSection = ({ data }: { data: ProductProps[] }) => {
       >
         {currentProducts.map((product, index) => (
           <Grid key={index} item xs={2} sm={4} md={4} sx={styles.grid}>
-            <ProductCard product={product} />
+            <ProductCard product={product as ProductType} />
           </Grid>
         ))}
       </Grid>
       <Pagination
         count={totalPages}
         page={currentPage}
-        onChange={(_, page) => handlePageClick(page)}
+        onChange={(_, page: number) => handlePageClick(page)}
       />
-    </ThemeProvider>
+    </>
   );
 };

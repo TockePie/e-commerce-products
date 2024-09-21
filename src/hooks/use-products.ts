@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import fetchData from "@/utils/fetchData";
-import ProductCardProps from "@/types/productTypes";
+import { ProductType } from "@/types/productTypes";
 
 const useProducts = (id?: number) => {
-  const [products, setProducts] = useState<ProductCardProps[]>([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

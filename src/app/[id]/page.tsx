@@ -8,8 +8,8 @@ import Rating from "@/components/ui/Stars/rating";
 
 import useProducts from "@/hooks/use-products";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
+import darkTheme from "@/utils/darkTheme";
 import { ProductType } from "@/types/productTypes";
-import darkTheme from "@/components/darkTheme";
 
 import styles from "./page.styles";
 
@@ -26,9 +26,11 @@ const ProductPage = ({ params }: { params: { id: number } }) => {
 
   if (error) {
     return (
-      <Typography variant="body1" color="error">
-        Failed to load product details.
-      </Typography>
+      <Box component="main" sx={styles.main}>
+        <Typography variant="body1" color="error">
+          Failed to load product details.
+        </Typography>
+      </Box>
     );
   }
 

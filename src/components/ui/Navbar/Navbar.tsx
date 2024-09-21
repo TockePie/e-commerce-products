@@ -3,6 +3,8 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import SearchIcon from "@mui/icons-material/Search";
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 
+import { navbar } from "@/utils/constants";
+
 import styles from "./Navbar.styles";
 
 const Navbar = () => {
@@ -12,13 +14,13 @@ const Navbar = () => {
         <Box sx={styles.leftBox}>
           <ShoppingBasketIcon sx={styles.shoppingBasket} />
           <Typography variant="h5" sx={styles.typography}>
-            Online Shop
+            {navbar.title}
           </Typography>
         </Box>
         <Box sx={styles.rightBox}>
           <Button variant="contained" sx={styles.searchButton}>
             <SearchIcon />
-            Search
+            {navbar.searchText}
           </Button>
         </Box>
       </Toolbar>
