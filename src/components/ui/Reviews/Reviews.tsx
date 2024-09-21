@@ -16,6 +16,7 @@ const Reviews = (data: ProductType) => {
       <Box sx={styles.reviews}>
         {data.reviews.map((review, index) => (
           <Card
+            variant="outlined"
             key={index}
             sx={{
               gridColumnStart: index + 1,

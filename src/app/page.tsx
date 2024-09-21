@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Grid, Pagination, Box } from "@mui/material";
+import { ThemeProvider, Grid, Pagination, Box } from "@mui/material";
 
 import Loading from "./loading";
 import ProductCard from "@/components/ui/ProductsCard/Card";
@@ -9,6 +9,7 @@ import ProductCard from "@/components/ui/ProductsCard/Card";
 import ProductProps from "@/types/productTypes";
 import useProducts from "@/hooks/use-products";
 import usePages from "@/hooks/use-pages";
+import darkTheme from "@/components/darkTheme";
 
 import styles from "./page.styles";
 
@@ -34,7 +35,7 @@ const MainSection = ({ data }: { data: ProductProps[] }) => {
   const productCount = useMemo(() => data.length, [data]);
 
   return (
-    <>
+    <ThemeProvider theme={darkTheme}>
       <h1>Found {productCount} products</h1>
       <Grid
         container
@@ -53,6 +54,6 @@ const MainSection = ({ data }: { data: ProductProps[] }) => {
         page={currentPage}
         onChange={(_, page) => handlePageClick(page)}
       />
-    </>
+    </ThemeProvider>
   );
 };
