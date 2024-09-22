@@ -2,4 +2,13 @@ interface ImageCarouselProps {
   images: string[];
 }
 
-export default ImageCarouselProps;
+interface ImageCarouselState {
+  currentImage: number;
+}
+
+interface ImageCarouselAction {
+  type: "NEXT" | "PREV" | "SET";
+  payload?: number;
+}
+
+export type { ImageCarouselProps, ImageCarouselState, ImageCarouselAction };
