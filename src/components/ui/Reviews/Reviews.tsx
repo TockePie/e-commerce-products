@@ -2,10 +2,10 @@ import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 
+import { reviews } from "@/utils/constants";
 import { ProductType } from "@/types/product";
 
 import styles from "./Reviews.styles";
-import { reviews } from "@/utils/constants";
 
 const Reviews = (data: ProductType) => {
   return (

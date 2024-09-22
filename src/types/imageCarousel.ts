@@ -3,6 +3,7 @@ interface ImageCarouselProps {
 }
 
 interface ImageCarouselState {
+  images: string[];
   currentImage: number;
 }
 

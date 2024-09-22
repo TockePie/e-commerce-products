@@ -1,3 +1,4 @@
+import React, { useCallback } from "react";
 import {
   Box,
   Drawer,
@@ -24,34 +25,50 @@ const DrawerComponent: React.FC<DrawerProps> = ({
   rating,
   setRating,
 }) => {
-  const takeCheckbox = (
-    _: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean,
-    category: string
-  ) => {
-    setSelectedCategory(checked ? category : null);
-  };
+  const {
+    title,
+    category,
+    priceTitle,
+    minRating,
+    ratingRange,
+    resetButton,
+    closeButton,
+  } = drawer;
 
-  const changePriceRange = (_: Event, newValue: number | number[]) => {
-    if (Array.isArray(newValue) && newValue.length === 2) {
-      setPriceRange(newValue as [number, number]);
-    }
-  };
+  const takeCheckbox = useCallback(
+    (
+      _: React.ChangeEvent<HTMLInputElement>,
+      checked: boolean,
+      category: string
+    ) => {
+      setSelectedCategory(checked ? category : null);
+    },
+    [setSelectedCategory]
+  );
 
-  const reset = () => {
+  const changePriceRange = useCallback(
+    (_: Event, newValue: number | number[]) => {
+      if (Array.isArray(newValue) && newValue.length === 2) {
+        setPriceRange(newValue as [number, number]);
+      }
+    },
+    [setPriceRange]
+  );
+
+  const reset = useCallback(() => {
     setSelectedCategory(null);
     setPriceRange([drawer.priceRange.min, drawer.priceRange.max]);
     setRating(0);
-  };
+  }, [setSelectedCategory, setPriceRange, setRating]);
 
   return (
     <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
       <Box sx={styles.drawerBox}>
         <Box>
-          <Typography variant="h5">{drawer.title}</Typography>
+          <Typography variant="h5">{title}</Typography>
 
           <Typography variant="body1" sx={styles.categories}>
-            {drawer.category}
+            {category}
           </Typography>
           <FormGroup>
             {categories.map((category: string) => (
@@ -71,7 +88,7 @@ const DrawerComponent: React.FC<DrawerProps> = ({
           </FormGroup>
 
           <Typography variant="body1" sx={styles.categories}>
-            {drawer.priceTitle}
+            {priceTitle}
           </Typography>
           <Slider
             value={priceRange}
@@ -82,27 +99,27 @@ const DrawerComponent: React.FC<DrawerProps> = ({
           />
 
           <Typography variant="body1" sx={styles.categories}>
-            {drawer.minRating}
+            {minRating}
           </Typography>
           <Slider
-            value={rating || 0}
+            value={rating ?? 0}
             onChange={(_, newValue) => setRating(newValue as number)}
             valueLabelDisplay="auto"
-            step={drawer.ratingRange.step}
-            min={drawer.ratingRange.min}
-            max={drawer.ratingRange.max}
+            step={ratingRange.step}
+            min={ratingRange.min}
+            max={ratingRange.max}
           />
         </Box>
         <Box sx={styles.buttons}>
           <Button variant="text" color="primary" onClick={reset}>
-            {drawer.resetButton}
+            {resetButton}
           </Button>
           <Button
             variant="contained"
             color="primary"
             onClick={() => setOpen(false)}
           >
-            {drawer.closeButton}
+            {closeButton}
           </Button>
         </Box>
       </Box>

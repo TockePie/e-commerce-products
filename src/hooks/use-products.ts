@@ -1,26 +1,28 @@
 import { useState, useEffect, useCallback } from "react";
+
 import fetchData from "@/utils/fetchData";
 import { ProductType } from "@/types/product";
 
 const useProducts = (id?: number) => {
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [state, setState] = useState<{
+    products: ProductType[];
+    loading: boolean;
+    error: string | null;
+  }>({
+    products: [],
+    loading: true,
+    error: null,
+  });
 
   const fetchProducts = useCallback(async () => {
     try {
-      setLoading(true);
-      setError(null);
+      setState(prevState => ({ ...prevState, loading: true, error: null }));
       const data = await fetchData(id);
-      setProducts(id ? [data] : data);
+      setState({ products: id ? [data] : data, loading: false, error: null });
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
+      const errorMessage =
+        err instanceof Error ? err.message : "An unknown error occurred";
+      setState({ products: [], loading: false, error: errorMessage });
     }
   }, [id]);
 
@@ -28,7 +30,7 @@ const useProducts = (id?: number) => {
     fetchProducts();
   }, [fetchProducts]);
 
-  return { products, loading, error };
+  return { ...state, refetch: fetchProducts };
 };
 
 export default useProducts;

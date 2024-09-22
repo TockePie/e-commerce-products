@@ -3,7 +3,16 @@ const categories = ["beauty", "fragrances", "furniture", "groceries"];
 const navbar = {
   title: "Online Shop",
   searchText: "Search",
-}
+};
+
+const titleStyleForCard = {
+  titleText: {
+    fontSize: "1.2rem",
+  },
+  smallText: {
+    fontSize: "1rem",
+  },
+};
 
 const drawer = {
   title: "Filter Options",
@@ -26,7 +35,7 @@ const drawer = {
 const imageCarousel = {
   dotsColorActive: "blue",
   dotsColorInactive: "gray",
-}
+};
 
 const reviews = {
   title: "Reviews",
@@ -38,4 +47,12 @@ const starSizes = {
   LARGE: { key: "l", size: 28 },
 };
 
-export { categories, navbar, drawer, imageCarousel, reviews, starSizes };
+export {
+  categories,
+  navbar,
+  titleStyleForCard,
+  drawer,
+  imageCarousel,
+  reviews,
+  starSizes,
+};

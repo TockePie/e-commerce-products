@@ -1,13 +1,9 @@
 import { useMemo, useReducer } from "react";
 
 import { ProductType } from "@/types/product";
+import { ImageCarouselAction } from "@/types/imageCarousel";
 
-interface PayloadAction {
-  type: "NEXT" | "PREV" | "SET";
-  payload?: number;
-}
-
-const reducer = (state: number, action: PayloadAction) => {
+const reducer = (state: number, action: ImageCarouselAction) => {
   switch (action.type) {
     case "NEXT":
       return state + 1;

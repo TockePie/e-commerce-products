@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, memo } from "react";
+import { Suspense, memo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
@@ -15,7 +15,7 @@ import {
 import Rating from "@/components/ui/Stars/rating";
 
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
-import getTitleStyle from "@/utils/getTitleStyle";
+import { titleStyleForCard } from "@/utils/constants";
 import ProductProps from "@/types/product";
 
 import styles from "./Card.styles";
@@ -36,19 +36,26 @@ const ProductCard = ({ product }: ProductProps) => {
 
   const discount = calculateDiscountedPrice(price, discountPercentage);
 
+  const getTitleStyle = useCallback((title: string) => {
+    return title.length > 20
+      ? titleStyleForCard.smallText
+      : titleStyleForCard.titleText;
+  }, []);
+
   return (
     <Card sx={styles.card}>
       <CardActionArea
         sx={styles.actionArea}
         onClick={() => router.push(`/${id}`)}
       >
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Box>Loading...</Box>}>
           <Image
             className={moduleStyles.productImage}
             src={images[0]}
             alt={title}
             width={200}
             height={200}
+            loading="lazy"
           />
         </Suspense>
 
@@ -80,11 +87,9 @@ const ProductCard = ({ product }: ProductProps) => {
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={
-                discountPercentage
-                  ? { textDecoration: "line-through" }
-                  : undefined
-              }
+              sx={{
+                textDecoration: discountPercentage ? "line-through" : "none",
+              }}
             >
               {`$${price}`}
             </Typography>
@@ -100,4 +105,6 @@ const ProductCard = ({ product }: ProductProps) => {
   );
 };
 
-export default memo(ProductCard);
+export default memo(ProductCard, (prevProps, nextProps) => {
+  return prevProps.product.id === nextProps.product.id;
+});

@@ -9,11 +9,26 @@ const reducer = (
 ): ImageCarouselState => {
   switch (action.type) {
     case "NEXT":
-      return { currentImage: state.currentImage + 1 };
+      return {
+        ...state,
+        currentImage:
+          state.currentImage === state.images.length - 1
+            ? 0
+            : state.currentImage + 1,
+      };
     case "PREV":
-      return { currentImage: state.currentImage - 1 };
+      return {
+        ...state,
+        currentImage:
+          state.currentImage === 0
+            ? state.images.length - 1
+            : state.currentImage - 1,
+      };
     case "SET":
-      return { currentImage: action.payload ?? 0 };
+      return {
+        ...state,
+        currentImage: action.payload ?? 0,
+      };
     default:
       return state;
   }

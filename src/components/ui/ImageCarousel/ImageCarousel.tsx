@@ -4,12 +4,13 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 import { imageCarousel } from "@/utils/constants";
 import reducer from "./ImageCarousel.reducer";
-import ImageCarouselProps from "@/types/imageCarousel";
+import ImageCarouselProps, { ImageCarouselState } from "@/types/imageCarousel";
 
 import styles from "./ImageCarousel.styles";
 
 const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
-  const [state, dispatch] = useReducer(reducer, { currentImage: 0 });
+  const initialState: ImageCarouselState = { images: images, currentImage: 0 };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const ImageComponent = useCallback(
     () => (
