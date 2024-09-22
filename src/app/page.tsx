@@ -15,10 +15,10 @@ import ProductCard from "@/components/ui/ProductsCard/Card";
 import DrawerComponent from "@/components/ui/Drawer/Drawer";
 
 import { ProductType } from "@/types/product";
+import darkTheme from "@/utils/darkTheme";
 import filterProducts from "@/utils/filterProducts";
 import useProducts from "@/hooks/use-products";
 import usePages from "@/hooks/use-pages";
-import darkTheme from "@/utils/darkTheme";
 
 import styles from "./page.styles";
 
@@ -74,10 +74,10 @@ export default function Home() {
 const MainSection = ({ data }: { data: ProductType[] }) => {
   const itemsPerPage = 10;
   const {
-    currentPage,
+    state: currentPage,
+    dispatch,
     totalPages,
     currentItems: currentProducts,
-    handlePageClick,
   } = usePages(data, itemsPerPage);
 
   return (
@@ -97,7 +97,7 @@ const MainSection = ({ data }: { data: ProductType[] }) => {
       <Pagination
         count={totalPages}
         page={currentPage}
-        onChange={(_, page: number) => handlePageClick(page)}
+        onChange={(_, page: number) => dispatch({ type: "SET", payload: page })}
       />
     </>
   );

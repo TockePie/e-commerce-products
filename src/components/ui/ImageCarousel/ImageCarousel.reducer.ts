@@ -1,7 +1,7 @@
 import {
   type ImageCarouselAction,
   type ImageCarouselState,
-} from "@/types/imageCarouselType";
+} from "@/types/imageCarousel";
 
 const reducer = (
   state: ImageCarouselState,

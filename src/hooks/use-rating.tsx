@@ -1,11 +1,7 @@
 import { useMemo } from "react";
 import { Box } from "@mui/material";
 
-const SIZES = {
-  SMALL: { key: "s", size: 10 },
-  MEDIUM: { key: "m", size: 18 },
-  LARGE: { key: "l", size: 28 },
-};
+import { starSizes } from "@/utils/constants";
 
 const styles = {
   ratingBox: {
@@ -26,10 +22,10 @@ const useRating = (
   const fractionPercent = ((ratingInPercent - nonFraction) * 100).toFixed(2);
 
   const size = useMemo(() => {
-    const sizeKey = Object.keys(SIZES).find(
-      (key: string) => SIZES[key as keyof typeof SIZES].key === iconSize
-    ) as keyof typeof SIZES;
-    return SIZES[sizeKey].size;
+    const sizeKey = Object.keys(starSizes).find(
+      (key: string) => starSizes[key as keyof typeof starSizes].key === iconSize
+    ) as keyof typeof starSizes;
+    return starSizes[sizeKey].size;
   }, [iconSize]);
 
   const getStarFill = (index: number) => {

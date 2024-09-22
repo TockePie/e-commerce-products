@@ -5,13 +5,14 @@ import Rating from "@/components/ui/Stars/rating";
 import { ProductType } from "@/types/product";
 
 import styles from "./Reviews.styles";
+import { reviews } from "@/utils/constants";
 
 const Reviews = (data: ProductType) => {
   return (
     <Box sx={styles.mainBox}>
       <Divider sx={styles.divider} />
       <Typography variant="h5" sx={styles.reviewsText}>
-        Reviews
+        {reviews.title}
       </Typography>
       <Box sx={styles.reviews}>
         {data.reviews.map((review, index) => (

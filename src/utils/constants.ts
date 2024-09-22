@@ -7,9 +7,9 @@ const navbar = {
 
 const drawer = {
   title: "Filter Options",
-  firstFilter: "Category",
-  secondFilter: "Price Range",
-  thirdFilter: "Minimum Rating",
+  category: "Category",
+  priceTitle: "Price Range",
+  minRating: "Minimum Rating",
   priceRange: {
     min: 0,
     max: 3000,
@@ -19,6 +19,8 @@ const drawer = {
     min: 0,
     max: 5,
   },
+  resetButton: "Reset",
+  closeButton: "Close",
 };
 
 const imageCarousel = {
@@ -26,4 +28,14 @@ const imageCarousel = {
   dotsColorInactive: "gray",
 }
 
-export { categories, navbar, drawer, imageCarousel };
+const reviews = {
+  title: "Reviews",
+};
+
+const starSizes = {
+  SMALL: { key: "s", size: 10 },
+  MEDIUM: { key: "m", size: 18 },
+  LARGE: { key: "l", size: 28 },
+};
+
+export { categories, navbar, drawer, imageCarousel, reviews, starSizes };
