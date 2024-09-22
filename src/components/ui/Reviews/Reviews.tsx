@@ -2,7 +2,7 @@ import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 
-import { ProductType } from "@/types/productTypes";
+import { ProductType } from "@/types/product";
 
 import styles from "./Reviews.styles";
 

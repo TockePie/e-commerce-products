@@ -1,5 +1,5 @@
-import FilterProductsParams from "@/types/filterProductsInterface";
-import { ProductType } from "@/types/productTypes";
+import FilterProductsParams from "@/types/filterProducts";
+import { ProductType } from "@/types/product";
 
 const filterProducts = ({
   products,

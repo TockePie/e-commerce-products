@@ -1,4 +1,4 @@
-import { ProductType } from '@/types/productTypes';
+import { ProductType } from '@/types/product';
 
 interface FilterProductsParams {
   products: ProductType[];

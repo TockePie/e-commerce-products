@@ -9,7 +9,7 @@ import Rating from "@/components/ui/Stars/rating";
 import useProducts from "@/hooks/use-products";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
 import darkTheme from "@/utils/darkTheme";
-import { ProductType } from "@/types/productTypes";
+import { ProductType } from "@/types/product";
 
 import styles from "./page.styles";
 

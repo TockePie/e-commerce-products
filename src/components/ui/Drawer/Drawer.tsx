@@ -9,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 
-import DrawerProps from "@/types/drawerInterface";
+import DrawerProps from "@/types/drawer";
 
 import { categories, drawer } from "@/utils/constants";
 

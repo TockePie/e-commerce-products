@@ -4,7 +4,7 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 import { imageCarousel } from "@/utils/constants";
 import reducer from "./ImageCarousel.reducer";
-import { type ImageCarouselProps } from "@/types/imageCarouselType";
+import ImageCarouselProps from "@/types/imageCarousel";
 
 import styles from "./ImageCarousel.styles";
 

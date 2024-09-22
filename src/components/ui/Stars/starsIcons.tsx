@@ -1,4 +1,4 @@
-import { IconType, StarComponentType } from "@/types/ratingType";
+import { IconType, StarComponentType } from "@/types/rating";
 
 const IconComponent = ({ type, width, height }: StarComponentType) => {
   const imageDataSource: Record<IconType, JSX.Element> = {

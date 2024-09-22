@@ -8,7 +8,7 @@ import {
   tableCellClasses,
 } from "@mui/material";
 
-import { ProductType } from "@/types/productTypes";
+import { ProductType } from "@/types/product";
 
 import styles from "./ProductsInfo.styles";
 

@@ -11,4 +11,5 @@ interface ImageCarouselAction {
   payload?: number;
 }
 
-export type { ImageCarouselProps, ImageCarouselState, ImageCarouselAction };
+export type { ImageCarouselState, ImageCarouselAction };
+export default ImageCarouselProps;

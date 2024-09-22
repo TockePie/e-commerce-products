@@ -14,7 +14,7 @@ import Loading from "./loading";
 import ProductCard from "@/components/ui/ProductsCard/Card";
 import DrawerComponent from "@/components/ui/Drawer/Drawer";
 
-import { ProductType } from "@/types/productTypes";
+import { ProductType } from "@/types/product";
 import filterProducts from "@/utils/filterProducts";
 import useProducts from "@/hooks/use-products";
 import usePages from "@/hooks/use-pages";

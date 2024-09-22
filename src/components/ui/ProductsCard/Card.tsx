@@ -16,7 +16,7 @@ import Rating from "@/components/ui/Stars/rating";
 
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
 import getTitleStyle from "@/utils/getTitleStyle";
-import ProductProps from "@/types/productTypes";
+import ProductProps from "@/types/product";
 
 import styles from "./Card.styles";
 import moduleStyles from "./Card.module.scss";

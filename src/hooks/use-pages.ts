@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 
-import ProductCardProps from "@/types/cardTypes";
+import { ProductType } from "@/types/productTypes";
 
-const usePages = (items: ProductCardProps[], itemsPerPage: number) => {
+const usePages = (items: ProductType[], itemsPerPage: number) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = useMemo(
