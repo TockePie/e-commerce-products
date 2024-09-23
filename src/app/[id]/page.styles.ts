@@ -12,6 +12,23 @@ const styles = {
       padding: "1rem",
     },
   },
+  imageBox: {
+    width: "50%",
+    height: "80vh",
+    display: "flex",
+    flexDirection: "column",
+
+    "@media (max-width: 768px)": {
+      width: "100%",
+      height: "50vh",
+    },
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
+    transition: "transform 0.5s ease-in-out",
+  },
   backToHome: {
     position: "absolute",
     top: 100,

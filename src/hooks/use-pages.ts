@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useReducer } from "react";
 
 import { ProductType } from "@/types/product";

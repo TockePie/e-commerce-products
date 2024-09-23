@@ -5,17 +5,6 @@ const styles = {
     objectFit: "contain",
     transition: "transform 0.5s ease-in-out",
   },
-  mainBox: {
-    width: "50%",
-    height: "80vh",
-    display: "flex",
-    flexDirection: "column",
-
-    "@media (max-width: 768px)": {
-      width: "100%",
-      height: "50vh",
-    },
-  },
   contentBox: {
     display: "flex",
     justifyContent: "space-around",

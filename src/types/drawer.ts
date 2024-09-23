@@ -1,12 +1,15 @@
+interface Action {
+  type: string;
+  payload?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+
 interface DrawerProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  dispatch: React.Dispatch<Action>;
   selectedCategory: string | null;
-  setSelectedCategory: (value: string | null) => void;
   priceRange: [number, number];
-  setPriceRange: (value: [number, number]) => void;
   rating: number | null;
-  setRating: (value: number | null) => void;
 }
 
 export default DrawerProps;

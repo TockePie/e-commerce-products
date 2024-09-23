@@ -1,34 +1,53 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import {
-  Button,
-  ThemeProvider,
-  Grid,
-  Pagination,
-  Box,
-  Typography,
-} from "@mui/material";
+import { useMemo, useState, useReducer } from "react";
+import { Button, Grid, Pagination, Box, Typography } from "@mui/material";
 
 import Loading from "./loading";
 import ProductCard from "@/components/ui/ProductsCard/Card";
 import DrawerComponent from "@/components/ui/Drawer/Drawer";
+import ThemeWrapper from "@/components/ThemeWrapper";
 
 import { ProductType } from "@/types/product";
-import darkTheme from "@/utils/darkTheme";
 import filterProducts from "@/utils/filterProducts";
 import useProducts from "@/hooks/use-products";
 import usePages from "@/hooks/use-pages";
 
 import styles from "./page.styles";
 
+const initialState = {
+  selectedCategory: null as string | null,
+  priceRange: [0, 3000] as [number, number],
+  rating: null as number | null,
+};
+
+type State = typeof initialState;
+
+type Action =
+  | { type: "SET_SELECTED_CATEGORY"; payload: string | null }
+  | { type: "SET_PRICE_RANGE"; payload: [number, number] }
+  | { type: "SET_RATING"; payload: number | null };
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "SET_SELECTED_CATEGORY":
+      return { ...state, selectedCategory: action.payload };
+    case "SET_PRICE_RANGE":
+      return { ...state, priceRange: action.payload };
+    case "SET_RATING":
+      return { ...state, rating: action.payload };
+    default:
+      return state;
+  }
+};
+
 export default function Home() {
   const { products, loading } = useProducts();
-
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 3000]);
-  const [rating, setRating] = useState<number | null>(null);
+  
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [open, setOpen] = useState(false);
+
+  const { selectedCategory, priceRange, rating } = state;
 
   const filteredProducts = useMemo(() => {
     return filterProducts({
@@ -49,23 +68,21 @@ export default function Home() {
       {loading ? (
         <Loading />
       ) : (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeWrapper>
           <DrawerComponent
             open={open}
             setOpen={setOpen}
+            dispatch={dispatch}
             selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
             priceRange={priceRange}
-            setPriceRange={setPriceRange}
             rating={rating}
-            setRating={setRating}
           />
           <Box sx={styles.title}>
             <Typography variant="h4">Found {productCount} products</Typography>
             <Button onClick={() => setOpen(true)}>Filter</Button>
           </Box>
           <MainSection data={filteredProducts} />
-        </ThemeProvider>
+        </ThemeWrapper>
       )}
     </Box>
   );

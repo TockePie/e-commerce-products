@@ -1,11 +1,13 @@
+"use client";
+
 import React, { useMemo, useCallback, memo, useReducer } from "react";
 import { IconButton, Box } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 import { imageCarousel } from "@/utils/constants";
-import reducer from "./ImageCarousel.reducer";
 import ImageCarouselProps, { ImageCarouselState } from "@/types/imageCarousel";
 
+import reducer from "./ImageCarousel.reducer";
 import styles from "./ImageCarousel.styles";
 
 const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
@@ -43,15 +45,8 @@ const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
     [images, state.currentImage]
   );
 
-  if (images.length === 1)
-    return (
-      <Box sx={styles.mainBox}>
-        <ImageComponent />
-      </Box>
-    );
-
   return (
-    <Box sx={styles.mainBox}>
+    <>
       <ImageComponent />
       {images.length > 1 && (
         <Box sx={styles.contentBox}>
@@ -72,7 +67,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
           </IconButton>
         </Box>
       )}
-    </Box>
+    </>
   );
 });
 

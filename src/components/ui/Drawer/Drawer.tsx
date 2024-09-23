@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback } from "react";
 import {
   Box,
@@ -18,12 +20,10 @@ import styles from "./Drawer.styles";
 const DrawerComponent: React.FC<DrawerProps> = ({
   open,
   setOpen,
+  dispatch,
   selectedCategory,
-  setSelectedCategory,
   priceRange,
-  setPriceRange,
   rating,
-  setRating,
 }) => {
   const {
     title,
@@ -41,25 +41,31 @@ const DrawerComponent: React.FC<DrawerProps> = ({
       checked: boolean,
       category: string
     ) => {
-      setSelectedCategory(checked ? category : null);
+      dispatch({
+        type: "SET_SELECTED_CATEGORY",
+        payload: checked ? category : null,
+      });
     },
-    [setSelectedCategory]
+    [dispatch]
   );
 
   const changePriceRange = useCallback(
     (_: Event, newValue: number | number[]) => {
       if (Array.isArray(newValue) && newValue.length === 2) {
-        setPriceRange(newValue as [number, number]);
+        dispatch({
+          type: "SET_PRICE_RANGE",
+          payload: newValue as [number, number],
+        });
       }
     },
-    [setPriceRange]
+    [dispatch]
   );
 
   const reset = useCallback(() => {
-    setSelectedCategory(null);
-    setPriceRange([drawer.priceRange.min, drawer.priceRange.max]);
-    setRating(0);
-  }, [setSelectedCategory, setPriceRange, setRating]);
+    dispatch({ type: "SET_SELECTED_CATEGORY", payload: null });
+    dispatch({ type: "SET_PRICE_RANGE", payload: [0, 3000] });
+    dispatch({ type: "SET_RATING", payload: null });
+  }, [dispatch]);
 
   return (
     <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
@@ -103,7 +109,9 @@ const DrawerComponent: React.FC<DrawerProps> = ({
           </Typography>
           <Slider
             value={rating ?? 0}
-            onChange={(_, newValue) => setRating(newValue as number)}
+            onChange={(_, newValue) =>
+              dispatch({ type: "SET_RATING", payload: newValue as number })
+            }
             valueLabelDisplay="auto"
             step={ratingRange.step}
             min={ratingRange.min}

@@ -1,14 +1,12 @@
-"use client";
+"use server";
 
-import React, { useMemo } from "react";
-import { Box, Divider, ThemeProvider, Typography } from "@mui/material";
+import React from "react";
+import { Box, Divider, Typography } from "@mui/material";
 
-import Loading from "./loading";
 import Rating from "@/components/ui/Stars/rating";
-
-import useProducts from "@/hooks/use-products";
+import ThemeWrapper from "@/components/ThemeWrapper";
+import getProduct from "@/utils/getProduct";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
-import darkTheme from "@/utils/darkTheme";
 import { ProductType } from "@/types/product";
 
 import styles from "./page.styles";
@@ -21,10 +19,10 @@ const ProductsInfo = React.lazy(
 );
 const Reviews = React.lazy(() => import("@/components/ui/Reviews/Reviews"));
 
-const ProductPage = ({ params }: { params: { id: number } }) => {
-  const { products, loading, error } = useProducts(params.id);
+const ProductPage = async ({ params }: { params: { id: number } }) => {
+  const product = await getProduct(params.id);
 
-  if (error) {
+  if (!product) {
     return (
       <Box component="main" sx={styles.main}>
         <Typography variant="body1" color="error">
@@ -34,86 +32,101 @@ const ProductPage = ({ params }: { params: { id: number } }) => {
     );
   }
 
-  const product = products.length > 0 ? products[0] : null;
-
-  return <>{loading ? <Loading /> : <MainSection {...product} />}</>;
-};
-
-const MainSection = (data: ProductType) => {
-  const discount = useMemo(
-    () => calculateDiscountedPrice(data.price, data.discountPercentage),
-    [data.price, data.discountPercentage]
-  );
+  const discountPrice = product.discountPercentage
+    ? calculateDiscountedPrice(product.price, product.discountPercentage)
+    : undefined;
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <Box>
-        <Box component="main" sx={styles.main}>
-          <ImageCarousel images={data.images} />
-          <Box sx={styles.contentBox}>
-            <Typography variant="h4">{data.title}</Typography>
+    <ThemeWrapper>
+      <MainSection {...product} discountPrice={discountPrice} />
+    </ThemeWrapper>
+  );
+};
 
-            <Box sx={styles.ratingBox}>
-              <Typography variant="body1">
-                {data.rating && `${data.rating}`}
-              </Typography>
-              <Rating
-                ratingInPercent={data.rating}
-                iconSize="l"
-                showOutOf={true}
-              />
-              <Typography variant="body1">{`(${data.reviews.length} reviews)`}</Typography>
-            </Box>
+const MainSection = ({
+  discountPrice,
+  ...data
+}: ProductType & { discountPrice?: number }) => {
+  return (
+    <Box>
+      <Box component="main" sx={styles.main}>
+        <Box sx={styles.imageBox}>
+          {data.images.length === 1 ? (
+            <Box
+              component="img"
+              src={data.images[0]}
+              alt={"Image"}
+              loading="lazy"
+              sx={styles.image}
+            />
+          ) : (
+            <ImageCarousel images={data.images} />
+          )}
+        </Box>
+        
+        <Box sx={styles.contentBox}>
+          <Typography variant="h4">{data.title}</Typography>
 
-            <Box>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={
-                  data.discountPercentage
-                    ? { textDecoration: "line-through" }
-                    : undefined
-                }
-              >
-                {`$${data.price}`}
-              </Typography>
-              {data.discountPercentage && (
-                <Typography variant="h5" color="red">
-                  {`$${discount}`}
-                </Typography>
-              )}
-            </Box>
-
-            <Typography
-              variant="body1"
-              sx={{
-                ...styles.stockStatus,
-                ...(data.availabilityStatus === "Low Stock"
-                  ? styles.redText
-                  : styles.greenText),
-              }}
-            >
-              {data.availabilityStatus === "Low Stock"
-                ? `Hurry up! Only ${data.stock} ${
-                    data.stock === 1 ? "item" : "items"
-                  } left`
-                : "In Stock"}
+          <Box sx={styles.ratingBox}>
+            <Typography variant="body1">
+              {data.rating && `${data.rating}`}
             </Typography>
+            <Rating
+              ratingInPercent={data.rating}
+              iconSize="l"
+              showOutOf={true}
+            />
+            <Typography variant="body1">{`(${data.reviews.length} reviews)`}</Typography>
+          </Box>
 
-            <Divider />
-            <ProductsInfo {...data} />
-            <Divider />
+          <Box>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={
+                data.discountPercentage
+                  ? { textDecoration: "line-through" }
+                  : undefined
+              }
+            >
+              {`$${data.price}`}
+            </Typography>
+            {data.discountPercentage && (
+              <Typography variant="h5" color="red">
+                {`$${discountPrice}`}
+              </Typography>
+            )}
+          </Box>
 
-            <Box sx={styles.description}>
-              <Typography variant="h5">Description</Typography>
-              <Typography variant="body1">{data.description}</Typography>
-            </Box>
+          <Typography
+            variant="body1"
+            sx={{
+              ...styles.stockStatus,
+              ...(data.availabilityStatus === "Low Stock"
+                ? styles.redText
+                : styles.greenText),
+            }}
+          >
+            {data.availabilityStatus === "Low Stock"
+              ? `Hurry up! Only ${data.stock} ${
+                  data.stock === 1 ? "item" : "items"
+                } left`
+              : "In Stock"}
+          </Typography>
+
+          <Divider />
+          <ProductsInfo {...data} />
+          <Divider />
+
+          <Box sx={styles.description}>
+            <Typography variant="h5">Description</Typography>
+            <Typography variant="body1">{data.description}</Typography>
           </Box>
         </Box>
-
-        <Reviews {...data} />
       </Box>
-    </ThemeProvider>
+
+      <Reviews {...data} />
+    </Box>
   );
 };
 
