@@ -4,9 +4,9 @@ import React, { useMemo, useCallback, memo, useReducer } from "react";
 import { IconButton, Box } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
-import { imageCarousel } from "@/utils/constants";
 import ImageCarouselProps, { ImageCarouselState } from "@/types/imageCarousel";
 
+import constant from "./ImageCarousel.constants";
 import reducer from "./ImageCarousel.reducer";
 import styles from "./ImageCarousel.styles";
 
@@ -37,8 +37,8 @@ const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
             ...styles.dots,
             backgroundColor:
               index === state.currentImage
-                ? imageCarousel.dotsColorActive
-                : imageCarousel.dotsColorInactive,
+                ? constant.dotsColorActive
+                : constant.dotsColorInactive,
           }}
         />
       )),

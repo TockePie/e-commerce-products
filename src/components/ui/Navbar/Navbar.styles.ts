@@ -11,6 +11,7 @@ const styles = {
   },
   shoppingBasket: {
     fontSize: 30,
+    cursor: "pointer",
   },
   typography: {
     "@media (max-width: 600px)": {

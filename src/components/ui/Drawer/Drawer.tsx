@@ -12,9 +12,9 @@ import {
   Button,
 } from "@mui/material";
 
-import { categories, drawer } from "@/utils/constants";
 import DrawerProps from "@/types/drawer";
 
+import { drawer, categories } from "./Drawer.constants";
 import styles from "./Drawer.styles";
 
 const DrawerComponent: React.FC<DrawerProps> = ({
