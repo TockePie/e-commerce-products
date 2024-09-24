@@ -42,8 +42,8 @@ const DrawerComponent: React.FC<DrawerProps> = ({
       category: string
     ) => {
       dispatch({
-        type: "SET_SELECTED_CATEGORY",
-        payload: checked ? category : null,
+        type: "SET_CATEGORY",
+        payload: checked ? category : "",
       });
     },
     [dispatch]
@@ -62,7 +62,7 @@ const DrawerComponent: React.FC<DrawerProps> = ({
   );
 
   const reset = useCallback(() => {
-    dispatch({ type: "SET_SELECTED_CATEGORY", payload: null });
+    dispatch({ type: "SET_CATEGORY", payload: "" });
     dispatch({ type: "SET_PRICE_RANGE", payload: [0, 3000] });
     dispatch({ type: "SET_RATING", payload: null });
   }, [dispatch]);

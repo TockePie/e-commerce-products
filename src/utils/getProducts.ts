@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ProductType } from "@/types/product";
 
-const getProducts = async (id?: number): Promise<ProductType | null> => {
+const getProducts = async (id?: number): Promise<ProductType | ProductType[] | null> => {
   const url = `https://dummyjson.com/products${id ? `/${id}` : ""}`;
 
   try {

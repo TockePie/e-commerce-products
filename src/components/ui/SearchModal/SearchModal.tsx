@@ -28,7 +28,12 @@ const SearchModal = ({ open, setOpen }: SearchModalProps) => {
   useEffect(() => {
     const fetchProducts = async () => {
       const result = await getProducts();
-      setProducts(result);
+      
+      if (Array.isArray(result)) {
+        setProducts(result);
+      } else {
+        setProducts([]);
+      }
       setLoading(false);
     };
 

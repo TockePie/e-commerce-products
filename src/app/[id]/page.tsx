@@ -23,7 +23,7 @@ const Reviews = React.lazy(() => import("@/components/ui/Reviews/Reviews"));
 const ProductPage = async ({ params }: { params: { id: number } }) => {
   const product = await getProducts(params.id);
 
-  if (!product) {
+  if (!product || Array.isArray(product)) {
     return (
       <Box component="main" sx={styles.main}>
         <Typography variant="body1" color="error">
