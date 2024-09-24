@@ -2,7 +2,6 @@ import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 
-import { reviews } from "@/utils/constants";
 import { ProductType } from "@/types/product";
 
 import styles from "./Reviews.styles";
@@ -12,7 +11,7 @@ const Reviews = (data: ProductType) => {
     <Box sx={styles.mainBox}>
       <Divider sx={styles.divider} />
       <Typography variant="h5" sx={styles.reviewsText}>
-        {reviews.title}
+        Reviews
       </Typography>
       <Box sx={styles.reviews}>
         {data.reviews.map((review, index) => (

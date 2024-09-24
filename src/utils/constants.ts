@@ -12,19 +12,10 @@ const titleStyleForCard = {
   },
 };
 
-const reviews = {
-  title: "Reviews",
-};
-
 const starSizes = {
   SMALL: { key: "s", size: 10 },
   MEDIUM: { key: "m", size: 18 },
   LARGE: { key: "l", size: 28 },
 };
 
-export {
-  navbar,
-  titleStyleForCard,
-  reviews,
-  starSizes,
-};
+export { navbar, titleStyleForCard, starSizes };

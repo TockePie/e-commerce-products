@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import SearchIcon from "@mui/icons-material/Search";
@@ -14,9 +14,32 @@ import SearchModal from "../SearchModal/SearchModal";
 const Navbar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      lastScrollY = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <AppBar component="nav">
+    <AppBar
+      component="nav"
+      sx={{ top: isVisible ? 0 : "-64px", transition: "top 0.3s" }}
+    >
       <Toolbar sx={styles.toolbar}>
         <Box sx={styles.leftBox}>
           <ShoppingBasketIcon

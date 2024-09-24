@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useCallback, memo, useReducer } from "react";
+import React, { useMemo, useCallback, memo, useReducer, useEffect } from "react";
 import { IconButton, Box } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
@@ -13,6 +13,14 @@ import styles from "./ImageCarousel.styles";
 const ImageCarousel: React.FC<ImageCarouselProps> = memo(({ images }) => {
   const initialState: ImageCarouselState = { images: images, currentImage: 0 };
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch({ type: "NEXT" });
+    }, constant.intervalTime);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const ImageComponent = useCallback(
     () => (
