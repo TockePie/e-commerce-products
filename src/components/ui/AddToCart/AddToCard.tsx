@@ -36,9 +36,8 @@ const AddToCart = ({ data }: { data: ProductType }) => {
         setIsInCart(true);
       }
 
-      console.log(cart);
-
       localStorage.setItem("cart", JSON.stringify(cart));
+      window.dispatchEvent(new Event("storage"));
     }
   };
 

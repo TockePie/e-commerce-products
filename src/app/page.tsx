@@ -9,6 +9,7 @@ import DrawerComponent from "@/components/ui/Drawer/Drawer";
 import ThemeWrapper from "@/components/ThemeWrapper";
 
 import { ProductType } from "@/types/product";
+import { FilterAction } from "@/types/drawer";
 import filterProducts from "@/utils/filterProducts";
 import usePages from "@/hooks/use-pages";
 
@@ -23,12 +24,7 @@ const initialState = {
 
 type State = typeof initialState;
 
-type Action = 
-  | { type: 'SET_RATING'; payload: number | null }
-  | { type: 'SET_CATEGORY'; payload: string }
-  | { type: 'SET_PRICE_RANGE'; payload: [number, number] }; 
-
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: State, action: FilterAction): State => {
   switch (action.type) {
     case "SET_CATEGORY":
       return { ...state, selectedCategory: action.payload };
