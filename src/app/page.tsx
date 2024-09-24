@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useReducer } from "react";
+import { useMemo, useState, useReducer, useEffect } from "react";
 import { Button, Grid, Pagination, Box, Typography } from "@mui/material";
 
 import Loading from "./loading";
@@ -10,10 +10,10 @@ import ThemeWrapper from "@/components/ThemeWrapper";
 
 import { ProductType } from "@/types/product";
 import filterProducts from "@/utils/filterProducts";
-import useProducts from "@/hooks/use-products";
 import usePages from "@/hooks/use-pages";
 
 import styles from "./page.styles";
+import getProducts from "@/utils/getProducts";
 
 const initialState = {
   selectedCategory: null as string | null,
@@ -23,14 +23,14 @@ const initialState = {
 
 type State = typeof initialState;
 
-type Action =
-  | { type: "SET_SELECTED_CATEGORY"; payload: string | null }
-  | { type: "SET_PRICE_RANGE"; payload: [number, number] }
-  | { type: "SET_RATING"; payload: number | null };
+type Action = 
+  | { type: 'SET_RATING'; payload: number | null }
+  | { type: 'SET_CATEGORY'; payload: string }
+  | { type: 'SET_PRICE_RANGE'; payload: [number, number] }; 
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "SET_SELECTED_CATEGORY":
+    case "SET_CATEGORY":
       return { ...state, selectedCategory: action.payload };
     case "SET_PRICE_RANGE":
       return { ...state, priceRange: action.payload };
@@ -42,12 +42,24 @@ const reducer = (state: State, action: Action): State => {
 };
 
 export default function Home() {
-  const { products, loading } = useProducts();
-  
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const [open, setOpen] = useState(false);
 
   const { selectedCategory, priceRange, rating } = state;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const result = await getProducts();
+
+      setProducts(Array.isArray(result) ? result : result ? [result] : []);
+      setLoading(false);
+    };
+
+    fetchProducts();
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return filterProducts({

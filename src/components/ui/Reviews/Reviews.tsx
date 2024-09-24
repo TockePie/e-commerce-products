@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 
@@ -9,7 +9,6 @@ import styles from "./Reviews.styles";
 const Reviews = (data: ProductType) => {
   return (
     <Box sx={styles.mainBox}>
-      <Divider sx={styles.divider} />
       <Typography variant="h5" sx={styles.reviewsText}>
         Reviews
       </Typography>

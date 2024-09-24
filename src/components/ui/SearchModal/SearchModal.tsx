@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
@@ -11,17 +11,29 @@ import {
   ListItemButton,
 } from "@mui/material";
 
-import useProducts from "@/hooks/use-products";
+import getProducts from "@/utils/getProducts";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
 import SearchModalProps from "@/types/searchModal";
+import { ProductType } from "@/types/product";
 
 import styles from "./SearchModal.styles";
 import ThemeWrapper from "@/components/ThemeWrapper";
 
 const SearchModal = ({ open, setOpen }: SearchModalProps) => {
-  const { products, loading } = useProducts();
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchPrompt, setSearchPrompt] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const result = await getProducts();
+      setProducts(result);
+      setLoading(false);
+    };
+
+    fetchProducts();
+  }, []);
 
   const filteredProducts = useMemo(() => {
     if (searchPrompt.length < 3) {

@@ -1,9 +1,7 @@
 const styles = {
   mainBox: {
+    marginTop: "3.5rem",
     padding: "3rem",
-  },
-  divider: {
-    marginBottom: 4,
   },
   reviewsText: {
     textAlign: "center",

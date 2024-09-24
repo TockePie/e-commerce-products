@@ -4,7 +4,15 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import SearchIcon from "@mui/icons-material/Search";
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 
 import { navbar } from "@/utils/constants";
 
@@ -15,6 +23,7 @@ const Navbar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [cartLength, setCartLength] = useState(null);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -33,6 +42,19 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    const updateCartLength = () => {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      setCartLength(cart.length);
+    };
+
+    updateCartLength();
+
+    window.addEventListener("storage", updateCartLength);
+
+    return () => window.removeEventListener("storage", updateCartLength);
   }, []);
 
   return (
@@ -60,6 +82,18 @@ const Navbar = () => {
             {navbar.searchText}
           </Button>
           <SearchModal open={open} setOpen={setOpen} />
+          <IconButton
+            sx={{
+              color: "white",
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+            onClick={() => router.push("/cart")}
+          >
+            <ShoppingCartIcon />
+            <Typography variant="h6">{cartLength}</Typography>
+          </IconButton>
         </Box>
       </Toolbar>
     </AppBar>

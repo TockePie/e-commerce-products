@@ -22,6 +22,10 @@ const styles = {
       width: "100%",
       height: "50vh",
     },
+
+    "@media (min-width: 1536px)": {
+      height: "35rem",
+    },
   },
   image: {
     width: "100%",
@@ -51,6 +55,11 @@ const styles = {
     pointerEvents: "none",
     display: "flex",
     gap: 2,
+    alignItems: "center",
+  },
+  priceAndCartBox: {
+    display: "flex",
+    gap: 10,
     alignItems: "center",
   },
   stockStatus: {

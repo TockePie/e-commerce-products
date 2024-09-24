@@ -5,7 +5,8 @@ import { Box, Divider, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 import ThemeWrapper from "@/components/ThemeWrapper";
-import getProduct from "@/utils/getProduct";
+import AddToCart from "@/components/ui/AddToCart/AddToCard";
+import getProducts from "@/utils/getProducts";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
 import { ProductType } from "@/types/product";
 
@@ -20,7 +21,7 @@ const ProductsInfo = React.lazy(
 const Reviews = React.lazy(() => import("@/components/ui/Reviews/Reviews"));
 
 const ProductPage = async ({ params }: { params: { id: number } }) => {
-  const product = await getProduct(params.id);
+  const product = await getProducts(params.id);
 
   if (!product) {
     return (
@@ -63,7 +64,7 @@ const MainSection = ({
             <ImageCarousel images={data.images} />
           )}
         </Box>
-        
+
         <Box sx={styles.contentBox}>
           <Typography variant="h4">{data.title}</Typography>
 
@@ -79,23 +80,26 @@ const MainSection = ({
             <Typography variant="body1">{`(${data.reviews.length} reviews)`}</Typography>
           </Box>
 
-          <Box>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={
-                data.discountPercentage
-                  ? { textDecoration: "line-through" }
-                  : undefined
-              }
-            >
-              {`$${data.price}`}
-            </Typography>
-            {data.discountPercentage && (
-              <Typography variant="h5" color="red">
-                {`$${discountPrice}`}
+          <Box sx={styles.priceAndCartBox}>
+            <Box>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={
+                  data.discountPercentage
+                    ? { textDecoration: "line-through" }
+                    : undefined
+                }
+              >
+                {`$${data.price}`}
               </Typography>
-            )}
+              {data.discountPercentage && (
+                <Typography variant="h5" color="red">
+                  {`$${discountPrice}`}
+                </Typography>
+              )}
+            </Box>
+            <AddToCart data={data} />
           </Box>
 
           <Typography
