@@ -1,5 +1,7 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 
+import ThemeWrapper from "@/components/ThemeWrapper";
+
 import styles from "./ModalConfirm.styles";
 import constants from "./ModalConfirm.constants";
 
@@ -11,25 +13,30 @@ interface ModalConfirmProps {
 
 const ModalConfirm = ({ open, setOpen, setCartItems }: ModalConfirmProps) => {
   const yesButton = () => {
-    localStorage.removeItem("cart");
-    setCartItems(null);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("cart");
+      setCartItems(null);
+      window.dispatchEvent(new Event("storage"));
+    }
     setOpen(false);
   };
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
-      <Box sx={styles.modal}>
-        <Typography>{constants.question}</Typography>
-        <Box sx={styles.buttonBox}>
-          <Button variant="contained" color="primary" onClick={yesButton}>
-            {constants.yes}
-          </Button>
-          <Button variant="outlined" onClick={() => setOpen(false)}>
-            {constants.no}
-          </Button>
+    <ThemeWrapper>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box sx={styles.modal}>
+          <Typography>{constants.question}</Typography>
+          <Box sx={styles.buttonBox}>
+            <Button variant="contained" color="primary" onClick={yesButton}>
+              {constants.yes}
+            </Button>
+            <Button variant="outlined" onClick={() => setOpen(false)}>
+              {constants.no}
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Modal>
+      </Modal>
+    </ThemeWrapper>
   );
 };
 
