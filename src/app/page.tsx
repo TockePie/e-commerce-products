@@ -4,45 +4,24 @@ import { useMemo, useState, useReducer, useEffect } from "react";
 import { Button, Grid, Pagination, Box, Typography } from "@mui/material";
 
 import Loading from "./loading";
-import ProductCard from "@/components/ui/ProductsCard/Card";
-import DrawerComponent from "@/components/ui/Drawer/Drawer";
+import ProductCard from "@/components/mainPage/ProductsCard/Card";
+import DrawerComponent from "@/components/mainPage/Drawer/Drawer";
 import ThemeWrapper from "@/components/ThemeWrapper";
 
 import { ProductType } from "@/types/product";
-import { FilterAction } from "@/types/drawer";
 import filterProducts from "@/utils/filterProducts";
+import getProducts from "@/utils/getProducts";
 import usePages from "@/hooks/use-pages";
 
 import styles from "./page.styles";
-import getProducts from "@/utils/getProducts";
-
-const initialState = {
-  selectedCategory: null as string | null,
-  priceRange: [0, 3000] as [number, number],
-  rating: null as number | null,
-};
-
-type State = typeof initialState;
-
-const reducer = (state: State, action: FilterAction): State => {
-  switch (action.type) {
-    case "SET_CATEGORY":
-      return { ...state, selectedCategory: action.payload };
-    case "SET_PRICE_RANGE":
-      return { ...state, priceRange: action.payload };
-    case "SET_RATING":
-      return { ...state, rating: action.payload };
-    default:
-      return state;
-  }
-};
+import { initialState, reducer } from "./page.reducer";
 
 export default function Home() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [open, setOpen] = useState(false);
 
   const { selectedCategory, priceRange, rating } = state;
 
@@ -66,11 +45,6 @@ export default function Home() {
     });
   }, [products, selectedCategory, priceRange, rating]);
 
-  const productCount = useMemo(
-    () => filteredProducts.length,
-    [filteredProducts]
-  );
-
   return (
     <Box component="main" sx={styles.main}>
       {loading ? (
@@ -86,7 +60,9 @@ export default function Home() {
             rating={rating}
           />
           <Box sx={styles.title}>
-            <Typography variant="h4">Found {productCount} products</Typography>
+            <Typography variant="h4">
+              Found {filteredProducts.length} products
+            </Typography>
             <Button onClick={() => setOpen(true)}>Filter</Button>
           </Box>
           <MainSection data={filteredProducts} />

@@ -5,7 +5,7 @@ import { Box, Divider, Typography } from "@mui/material";
 
 import Rating from "@/components/ui/Stars/rating";
 import ThemeWrapper from "@/components/ThemeWrapper";
-import AddToCart from "@/components/ui/AddToCart/AddToCard";
+import AddToCart from "@/components/id/AddToCart/AddToCard";
 
 import getProducts from "@/utils/getProducts";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
@@ -14,12 +14,12 @@ import { ProductType } from "@/types/product";
 import styles from "./page.styles";
 
 const ImageCarousel = React.lazy(
-  () => import("@/components/ui/ImageCarousel/ImageCarousel")
+  () => import("@/components/id/ImageCarousel/ImageCarousel")
 );
-const ProductsInfo = React.lazy(
-  () => import("@/components/ui/ProductsDetails/ProductsDetails")
+const ProductsDetails = React.lazy(
+  () => import("@/components/id/ProductsDetails/ProductsDetails")
 );
-const Reviews = React.lazy(() => import("@/components/ui/Reviews/Reviews"));
+const Reviews = React.lazy(() => import("@/components/id/Reviews/Reviews"));
 
 const ProductPage = async ({ params }: { params: { id: number } }) => {
   const product = await getProducts(params.id);
@@ -120,7 +120,7 @@ const MainSection = ({
           </Typography>
 
           <Divider />
-          <ProductsInfo {...data} />
+          <ProductsDetails {...data} />
           <Divider />
 
           <Box sx={styles.description}>
