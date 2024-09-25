@@ -45,6 +45,28 @@ const ProductPage = async ({ params }: { params: { id: number } }) => {
   );
 };
 
+export const generateStaticParams = async () => {
+  try {
+    const response = await fetch("https://dummyjson.com/products");
+    const data = await response.json();
+
+    const products = data.products;
+
+    if (!Array.isArray(products)) {
+      console.error("Expected an array of products but got:", products);
+      return [];
+    }
+
+    return products.map((product: ProductType) => ({
+      id: product.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+
+    return [];
+  }
+};
+
 const MainSection = ({
   discountPrice,
   ...data
