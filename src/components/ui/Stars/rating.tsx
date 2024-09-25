@@ -8,6 +8,13 @@ import { RatingType } from "@/types/rating";
 
 import styles from "./rating.styles";
 
+const starSizes = {
+  SMALL: { key: "s", size: 10 },
+  MEDIUM: { key: "m", size: 18 },
+  LARGE: { key: "l", size: 28 },
+};
+
+
 const RatingComponent = ({
   iconSize,
   ratingInPercent,

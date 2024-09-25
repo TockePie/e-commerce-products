@@ -1,5 +1,5 @@
 const constant = {
-  dotsColorActive: "blue",
+  dotsColorActive: "#1976D2",
   dotsColorInactive: "gray",
   intervalTime: 5000,
 };

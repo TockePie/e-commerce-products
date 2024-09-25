@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { Box } from "@mui/material";
 
-import { starSizes } from "@/utils/constants";
-
 const styles = {
   ratingBox: {
     position: "relative",
@@ -11,6 +9,12 @@ const styles = {
     overflow: "hidden",
     position: "absolute",
   },
+};
+
+const starSizes = {
+  SMALL: { key: "s", size: 10 },
+  MEDIUM: { key: "m", size: 18 },
+  LARGE: { key: "l", size: 28 },
 };
 
 const useRating = (

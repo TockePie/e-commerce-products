@@ -15,11 +15,19 @@ import {
 import Rating from "@/components/ui/Stars/rating";
 
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
-import { titleStyleForCard } from "@/utils/constants";
 import ProductProps from "@/types/product";
 
 import styles from "./Card.styles";
 import moduleStyles from "./Card.module.scss";
+
+const titleStyleForCard = {
+  titleText: {
+    fontSize: "1.2rem",
+  },
+  smallText: {
+    fontSize: "1rem",
+  },
+};
 
 const ProductCard = ({ product }: ProductProps) => {
   const router = useRouter();

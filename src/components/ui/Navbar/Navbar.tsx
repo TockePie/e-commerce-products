@@ -14,8 +14,6 @@ import {
   Typography,
 } from "@mui/material";
 
-import { navbar } from "@/utils/constants";
-
 import styles from "./Navbar.styles";
 import SearchModal from "../SearchModal/SearchModal";
 
@@ -69,7 +67,7 @@ const Navbar = () => {
             onClick={() => router.replace("./")}
           />
           <Typography variant="h5" sx={styles.typography}>
-            {navbar.title}
+            Online Shop
           </Typography>
         </Box>
         <Box sx={styles.rightBox}>
@@ -79,7 +77,7 @@ const Navbar = () => {
             onClick={() => setOpen(true)}
           >
             <SearchIcon />
-            {navbar.searchText}
+            Search
           </Button>
           <SearchModal open={open} setOpen={setOpen} />
           <IconButton
