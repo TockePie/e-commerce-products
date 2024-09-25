@@ -6,10 +6,11 @@ import {
   Drawer,
   Typography,
   Slider,
-  Checkbox,
   FormControlLabel,
   FormGroup,
   Button,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 
 import DrawerProps from "@/types/drawer";
@@ -77,20 +78,22 @@ const DrawerComponent: React.FC<DrawerProps> = ({
             {category}
           </Typography>
           <FormGroup>
-            {categories.map((category: string) => (
-              <FormControlLabel
-                key={category}
-                control={
-                  <Checkbox
-                    checked={selectedCategory === category}
-                    onChange={(event, checked) =>
-                      takeCheckbox(event, checked, category)
-                    }
-                  />
-                }
-                label={category}
-              />
-            ))}
+            <RadioGroup>
+              {categories.map((category: string) => (
+                <FormControlLabel
+                  key={category}
+                  control={
+                    <Radio
+                      checked={selectedCategory === category}
+                      onChange={(event, checked) =>
+                        takeCheckbox(event, checked, category)
+                      }
+                    />
+                  }
+                  label={category}
+                />
+              ))}
+            </RadioGroup>
           </FormGroup>
 
           <Typography variant="body1" sx={styles.categories}>

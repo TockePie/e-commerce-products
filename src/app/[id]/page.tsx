@@ -6,6 +6,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import Rating from "@/components/ui/Stars/rating";
 import ThemeWrapper from "@/components/ThemeWrapper";
 import AddToCart from "@/components/ui/AddToCart/AddToCard";
+
 import getProducts from "@/utils/getProducts";
 import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
 import { ProductType } from "@/types/product";
@@ -16,7 +17,7 @@ const ImageCarousel = React.lazy(
   () => import("@/components/ui/ImageCarousel/ImageCarousel")
 );
 const ProductsInfo = React.lazy(
-  () => import("@/components/ui/ProductsInfo/ProductsInfo")
+  () => import("@/components/ui/ProductsDetails/ProductsDetails")
 );
 const Reviews = React.lazy(() => import("@/components/ui/Reviews/Reviews"));
 
@@ -49,7 +50,7 @@ const MainSection = ({
   ...data
 }: ProductType & { discountPrice?: number }) => {
   return (
-    <Box>
+    <>
       <Box component="main" sx={styles.main}>
         <Box sx={styles.imageBox}>
           {data.images.length === 1 ? (
@@ -130,7 +131,7 @@ const MainSection = ({
       </Box>
 
       <Reviews {...data} />
-    </Box>
+    </>
   );
 };
 
