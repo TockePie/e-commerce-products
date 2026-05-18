@@ -1,21 +1,19 @@
-import { useState, useMemo, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Modal, Box, Typography, Input, List } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
+import { Box, Input, List, Modal, Typography } from '@mui/material';
 
-import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
-import SearchModalProps from '@/types/searchModal';
-import { Product } from '@/types/product';
-
-import styles from './SearchModal.styles';
 import ThemeWrapper from '@/components/ThemeWrapper';
 import { getProducts } from '@/lib/api';
+import { Product } from '@/types/product';
+import SearchModalProps from '@/types/searchModal';
+import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
+
 import SearchItem from './search-item';
+import styles from './SearchModal.styles';
 
 const SearchModal = ({ open, setOpen }: SearchModalProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchPrompt, setSearchPrompt] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {

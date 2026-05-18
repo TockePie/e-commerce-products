@@ -1,7 +1,7 @@
-import { Box, Typography } from "@mui/material";
-import AutorenewIcon from "@mui/icons-material/Autorenew";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { Box, Typography } from '@mui/material';
 
-import styles from "@/app/page.styles";
+import styles from '@/app/page.styles';
 
 export default function Loading() {
   return (

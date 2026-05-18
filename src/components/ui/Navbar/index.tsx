@@ -1,22 +1,20 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
   Slide,
   Toolbar,
   Typography,
   useScrollTrigger,
 } from '@mui/material';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 import styles from './Navbar.styles';
-
 import SearchBtn from './search-btn';
 
 const CartCount = dynamic(() => import('./cart-count'), {

@@ -1,9 +1,10 @@
-import { Product } from '@/types/product';
 import { Box, ListItem, ListItemButton, Typography } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
+
+import { Product } from '@/types/product';
 
 import styles from './SearchModal.styles';
-import Link from 'next/link';
 
 interface Props {
   product: Product;
