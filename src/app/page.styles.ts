@@ -1,3 +1,5 @@
+import { StylesType } from "@/types/mui";
+
 const styles = {
   main: {
     display: "flex",
@@ -49,11 +51,29 @@ const styles = {
     alignContent: "center",
   },
 
-  loadingPage: {
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
+  loading: {
+    box: {
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem",
+    },
+    spinner: {
+      fontSize: 40,
+      "@media (prefers-color-scheme: dark)": {
+        color: "white",
+      },
+      color: "black",
+      "@keyframes spin": {
+        "0%": {
+          transform: "rotate(0deg)",
+        },
+        "100%": {
+          transform: "rotate(360deg)",
+        },
+      },
+      animation: "spin 2s linear infinite",
+    },
   },
-};
+} satisfies StylesType;
 
 export default styles;
