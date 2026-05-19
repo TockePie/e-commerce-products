@@ -1,44 +1,35 @@
-import { useEffect, useMemo, useState } from 'react';
+'use client';
+
+import { useMemo, useState } from 'react';
 import { Box, Input, List, Modal, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
 import ThemeWrapper from '@/components/ThemeWrapper';
 import { getProducts } from '@/lib/api';
-import { Product } from '@/types/product';
 import SearchModalProps from '@/types/searchModal';
 import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
 
 import SearchItem from './search-item';
-import styles from './SearchModal.styles';
+import styles from './styles';
 
 const SearchModal = ({ open, setOpen }: SearchModalProps) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchPrompt, setSearchPrompt] = useState('');
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const result = await getProducts();
-
-      if (Array.isArray(result)) {
-        setProducts(result);
-      } else {
-        setProducts([]);
-      }
-      setLoading(false);
-    };
-
-    fetchProducts();
-  }, []);
+  const { data = [], isLoading } = useQuery({
+    queryKey: ['products'],
+    queryFn: getProducts,
+    staleTime: 1000 * 60 * 5,
+  });
 
   const filteredProducts = useMemo(() => {
     if (searchPrompt.length < 3) {
       return [];
     }
 
-    return products.filter((product) =>
+    return data.filter((product) =>
       product.title.toLowerCase().includes(searchPrompt.toLowerCase()),
     );
-  }, [products, searchPrompt]);
+  }, [data, searchPrompt]);
 
   return (
     <ThemeWrapper>
@@ -50,7 +41,7 @@ const SearchModal = ({ open, setOpen }: SearchModalProps) => {
           />
 
           <List>
-            {loading ? (
+            {isLoading ? (
               <Typography>Loading...</Typography>
             ) : filteredProducts.length === 0 ? (
               <Typography>No products found.</Typography>

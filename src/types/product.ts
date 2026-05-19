@@ -1,4 +1,25 @@
-type ProductType = {
+export interface Dimensions {
+  width: number;
+  height: number;
+  depth: number;
+}
+
+export interface Review {
+  rating: number;
+  comment: string;
+  date: string; // ISO Date String
+  reviewerName: string;
+  reviewerEmail: string;
+}
+
+export interface ProductMeta {
+  createdAt: string; // ISO Date String
+  updatedAt: string; // ISO Date String
+  barcode: string;
+  qrCode: string;
+}
+
+export interface Product {
   id: number;
   title: string;
   description: string;
@@ -11,37 +32,18 @@ type ProductType = {
   brand: string;
   sku: string;
   weight: number;
-  dimensions: {
-    width: number;
-    height: number;
-    depth: number;
-  };
+  dimensions: Dimensions;
   warrantyInformation: string;
   shippingInformation: string;
-  availabilityStatus: "Low Stock" | "In Stock";
-  reviews: {
-    rating: number;
-    comment: string;
-    date: string;
-    reviewerName: string;
-    reviewerEmail: string;
-  }[];
+  availabilityStatus: string;
+  reviews: Review[];
   returnPolicy: string;
   minimumOrderQuantity: number;
-  meta: {
-    createdAt: string;
-    updatedAt: string;
-    barcode: string;
-    qrCode: string;
-  };
+  meta: ProductMeta;
   images: string[];
   thumbnail: string;
-};
-
-interface ProductProps {
-  product: ProductType;
 }
 
-export type { ProductType };
-
-export default ProductProps;
+export interface ProductsResponse {
+  products: Product[];
+}

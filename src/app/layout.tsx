@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import Navbar from '@/components/ui/Navbar';
+import Slider from '@/components/ui/Navbar/slider';
+
+import Providers from './providers';
 
 import './globals.css';
 
@@ -28,8 +31,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar />
-        {children}
+        <Providers>
+          <Slider>
+            <Navbar />
+          </Slider>
+          {children}
+        </Providers>
       </body>
     </html>
   );

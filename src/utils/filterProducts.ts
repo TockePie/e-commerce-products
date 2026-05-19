@@ -1,12 +1,12 @@
-import FilterProductsParams from "@/types/filterProducts";
-import { ProductType } from "@/types/product";
+import FilterProductsParams from '@/types/filterProducts';
+import { Product } from '@/types/product';
 
 const filterProducts = ({
   products,
   selectedCategory,
   priceRange,
   rating,
-}: FilterProductsParams): ProductType[] => {
+}: FilterProductsParams): Product[] => {
   return products.filter((product) => {
     const categoryMatch = selectedCategory
       ? product.category === selectedCategory

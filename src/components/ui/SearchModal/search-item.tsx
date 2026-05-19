@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { Product } from '@/types/product';
 
-import styles from './SearchModal.styles';
+import styles from './styles';
 
 interface Props {
   product: Product;
@@ -29,6 +29,7 @@ export default function SearchItem({ product, discount, onLeave }: Props) {
             )}
             <Typography>{product.title}</Typography>
           </Box>
+
           <Box sx={styles.item.priceBox}>
             <Typography
               variant="body2"

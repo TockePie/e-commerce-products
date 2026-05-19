@@ -7,8 +7,7 @@ interface CartState {
   cart: Product[];
 
   toggleCartItem: (product: Product) => void;
-  //   removeItem: (itemId: ItemId) => void;
-  //   clearCart: () => void;
+  // cleanCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -30,12 +29,11 @@ export const useCartStore = create<CartState>()(
           });
         }
       },
-      //   removeItem: (itemId) => {
-      //     set((state) => ({
-      //       cart: state.cart.filter((item) => item.id !== itemId),
-      //     }));
-      //   },
-      //   clearCart: () => set({ cart: [] }),
+      cleanCart: () => {
+        set({
+          cart: [],
+        });
+      },
     }),
     {
       name: 'cart',

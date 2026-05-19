@@ -6,7 +6,7 @@ import { Button } from '@mui/material';
 
 import SearchModal from '../SearchModal';
 
-import styles from './Navbar.styles';
+import styles from './styles';
 
 export default function SearchBtn() {
   const [open, setOpen] = useState(false);
