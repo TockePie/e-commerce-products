@@ -1,59 +1,57 @@
+import { StylesType } from '@/types/mui';
+
 const styles = {
   main: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "3.5rem",
-    gap: "2rem",
-    padding: "3rem",
-
-    "@media (max-width: 767px)": {
-      padding: "2rem 1rem",
-    },
-
-    "@media (min-width: 768px) and (max-width: 1023px)": {
-      padding: "2rem 1rem",
-    },
-
-    "@media (min-width: 1024px) and (max-width: 1279px)": {
-      padding: "2rem 7vw",
-    },
-
-    "@media (min-width: 1280px) and (max-width: 1535px)": {
-      padding: "2rem 4vw",
-    },
-
-    "@media (min-width: 1536px)": {
-      marginTop: "4rem",
-      marginLeft: "5vw",
-      marginRight: "5vw",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: { xs: '3.5rem', xl: '4rem' },
+    marginLeft: { xl: '5vw' },
+    marginRight: { xl: '5vw' },
+    gap: '2rem',
+    padding: {
+      xs: '2rem 1rem',
+      sm: '2rem 1rem',
+      md: '2rem 7vw',
+      lg: '2rem 4vw',
+      xl: '3rem',
     },
   },
   title: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "1rem",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '1rem',
 
-    "@media (max-width: 767px)": {
-      flexDirection: "column",
-      gap: "0.5rem",
+    '@media (max-width: 767px)': {
+      flexDirection: 'column',
+      gap: '0.5rem',
     },
   },
-  gridContainer: {
-    alignItems: "center",
-  },
-  grid: {
-    display: "flex",
-    justifyContent: "center",
-    alignContent: "center",
-  },
 
-  loadingPage: {
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
+  loading: {
+    box: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem',
+    },
+    spinner: {
+      fontSize: 40,
+      '@media (prefers-color-scheme: dark)': {
+        color: 'white',
+      },
+      color: 'black',
+      '@keyframes spin': {
+        '0%': {
+          transform: 'rotate(0deg)',
+        },
+        '100%': {
+          transform: 'rotate(360deg)',
+        },
+      },
+      animation: 'spin 2s linear infinite',
+    },
   },
-};
+} satisfies StylesType;
 
 export default styles;

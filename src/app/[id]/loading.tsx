@@ -1,15 +1,13 @@
-import { Box, Typography } from "@mui/material";
-import { BeatLoader } from "react-spinners";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { Box, Typography } from '@mui/material';
 
-import styles from "@/app/page.styles";
+import styles from '@/app/page.styles';
 
-const Loading = () => {
+export default function Loading() {
   return (
-    <Box sx={styles.loadingPage}>
+    <Box sx={styles.loading.box}>
       <Typography variant="h4">Loading</Typography>
-      <BeatLoader size={10} loading={true} />
+      <AutorenewIcon sx={styles.loading.spinner} />
     </Box>
   );
-};
-
-export default Loading;
+}

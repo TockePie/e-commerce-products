@@ -1,24 +1,26 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
 
-import Navbar from "@/components/ui/Navbar/Navbar";
+import Navbar from '@/components/ui/Navbar';
+import Slider from '@/components/ui/Navbar/slider';
 
-import "./globals.css";
+import Providers from './providers';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+import './globals.css';
+
+const geistSans = Geist({
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "E-commerce Products",
-  description: "A simple e-commerce site built with Next.js and TypeScript.",
+  title: 'E-commerce Products',
+  description: 'A simple e-commerce site built with Next.js and TypeScript.',
 };
 
 export default function RootLayout({
@@ -27,17 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          rel="preload"
-          href="/_next/static/css/app/layout.css?1726484423495"
-          as="style"
-        />
-      </head>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar />
-        {children}
+        <Providers>
+          <Slider>
+            <Navbar />
+          </Slider>
+          {children}
+        </Providers>
       </body>
     </html>
   );
