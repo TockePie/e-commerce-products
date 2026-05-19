@@ -1,3 +1,5 @@
+import { StylesType } from '@/types/mui';
+
 const styles = {
   toolbar: {
     alignItems: 'center',
@@ -28,6 +30,6 @@ const styles = {
     alignItems: 'center',
     gap: '1.5rem',
   },
-};
+} satisfies StylesType;
 
 export default styles;

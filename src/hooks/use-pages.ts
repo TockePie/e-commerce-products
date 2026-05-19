@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { useMemo, useReducer } from "react";
+import { useMemo, useReducer } from 'react';
 
-import { ProductType } from "@/types/product";
-import { ImageCarouselAction } from "@/types/imageCarousel";
+import { ImageCarouselAction } from '@/types/imageCarousel';
+import { Product } from '@/types/product';
 
 const reducer = (state: number, action: ImageCarouselAction) => {
   switch (action.type) {
-    case "NEXT":
+    case 'NEXT':
       return state + 1;
-    case "PREV":
+    case 'PREV':
       return state - 1;
-    case "SET":
+    case 'SET':
       return action.payload ?? 0;
     default:
       return state;
   }
 };
 
-const usePages = (items: ProductType[], itemsPerPage: number) => {
+const usePages = (items: Product[], itemsPerPage: number) => {
   const [state, dispatch] = useReducer(reducer, 1);
 
   const totalPages = useMemo(
     () => Math.max(Math.ceil(items.length / Math.max(itemsPerPage, 1)), 1),
-    [items.length, itemsPerPage]
+    [items.length, itemsPerPage],
   );
 
   const currentItems = useMemo(() => {

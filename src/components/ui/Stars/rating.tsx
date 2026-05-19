@@ -1,12 +1,11 @@
-import React, { useMemo } from "react";
-import { Box } from "@mui/material";
+import { useMemo } from 'react';
+import { Box } from '@mui/material';
 
-import IconComponent from "./starsIcons";
+import useRating from '@/hooks/use-rating';
+import { RatingType } from '@/types/rating';
 
-import useRating from "@/hooks/use-rating";
-import { RatingType } from "@/types/rating";
-
-import styles from "./rating.styles";
+import styles from './rating.styles';
+import IconComponent from './starsIcons';
 
 const RatingComponent = ({
   iconSize,
@@ -17,11 +16,11 @@ const RatingComponent = ({
 
   const RatingHighlighted = useMemo(
     () => <IconComponent type="ratingHighlighted" width={size} height={size} />,
-    [size]
+    [size],
   );
   const RatingDefault = useMemo(
     () => <IconComponent type="ratingDefault" width={size} height={size} />,
-    [size]
+    [size],
   );
 
   const starsArray = useMemo(() => [...Array(5)], []);
@@ -29,7 +28,7 @@ const RatingComponent = ({
   return (
     <Box sx={styles.root}>
       {starsArray.map((_, index) =>
-        renderStar(RatingHighlighted, RatingDefault)(index)
+        renderStar(RatingHighlighted, RatingDefault)(index),
       )}
     </Box>
   );

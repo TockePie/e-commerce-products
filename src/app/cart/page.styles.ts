@@ -1,3 +1,5 @@
+import { StylesType } from '@/types/mui';
+
 const styles = {
   main: {
     display: 'flex',
@@ -7,6 +9,7 @@ const styles = {
     gap: '2rem',
     padding: '3rem',
 
+    //FIXME
     '@media (max-width: 767px)': {
       padding: '2rem 1rem',
     },
@@ -41,6 +44,6 @@ const styles = {
     borderRadius: 2,
     width: '100%',
   },
-};
+} satisfies StylesType;
 
 export default styles;

@@ -1,4 +1,4 @@
-import { FilterAction } from "@/types/drawer";
+import { FilterAction } from '@/types/drawer';
 
 const initialState = {
   selectedCategory: null as string | null,
@@ -10,11 +10,11 @@ type State = typeof initialState;
 
 const reducer = (state: State, action: FilterAction): State => {
   switch (action.type) {
-    case "SET_CATEGORY":
+    case 'SET_CATEGORY':
       return { ...state, selectedCategory: action.payload };
-    case "SET_PRICE_RANGE":
+    case 'SET_PRICE_RANGE':
       return { ...state, priceRange: action.payload };
-    case "SET_RATING":
+    case 'SET_RATING':
       return { ...state, rating: action.payload };
     default:
       return state;

@@ -1,3 +1,5 @@
+import { StylesType } from '@/types/mui';
+
 const styles = {
   link: {
     width: '100%',
@@ -21,6 +23,6 @@ const styles = {
     alignItems: 'center',
     gap: '10px',
   },
-};
+} satisfies StylesType;
 
 export default styles;
