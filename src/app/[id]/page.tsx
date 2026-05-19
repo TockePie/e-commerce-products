@@ -1,28 +1,27 @@
-"use server";
+'use server';
 
-import React from "react";
-import { Box, Divider, Typography } from "@mui/material";
+import React from 'react';
+import { Box, Divider, Typography } from '@mui/material';
 
-import Rating from "@/components/ui/Stars/rating";
-import ThemeWrapper from "@/components/ThemeWrapper";
-import AddToCart from "@/components/id/AddToCart/AddToCard";
+import AddToCart from '@/components/id/AddToCart';
+import Rating from '@/components/ui/Stars/rating';
+import { getProductById } from '@/lib/api';
+import { Product } from '@/types/product';
+import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
 
-import getProducts from "@/utils/getProducts";
-import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
-import { ProductType } from "@/types/product";
-
-import styles from "./page.styles";
+import styles from './page.styles';
 
 const ImageCarousel = React.lazy(
-  () => import("@/components/id/ImageCarousel/ImageCarousel")
+  () => import('@/components/id/ImageCarousel/ImageCarousel'),
 );
 const ProductsDetails = React.lazy(
-  () => import("@/components/id/ProductsDetails/ProductsDetails")
+  () => import('@/components/id/ProductsDetails/ProductsDetails'),
 );
-const Reviews = React.lazy(() => import("@/components/id/Reviews/Reviews"));
+const Reviews = React.lazy(() => import('@/components/id/Reviews/Reviews'));
 
 const ProductPage = async ({ params }: { params: { id: number } }) => {
-  const product = await getProducts(params.id);
+  const { id } = await params;
+  const product = await getProductById(id);
 
   if (!product || Array.isArray(product)) {
     return (
@@ -38,30 +37,26 @@ const ProductPage = async ({ params }: { params: { id: number } }) => {
     ? calculateDiscountedPrice(product.price, product.discountPercentage)
     : undefined;
 
-  return (
-    <ThemeWrapper>
-      <MainSection {...product} discountPrice={discountPrice} />
-    </ThemeWrapper>
-  );
+  return <MainSection {...product} discountPrice={discountPrice} />;
 };
 
 export const generateStaticParams = async () => {
   try {
-    const response = await fetch("https://dummyjson.com/products");
+    const response = await fetch('https://dummyjson.com/products');
     const data = await response.json();
 
     const products = data.products;
 
     if (!Array.isArray(products)) {
-      console.error("Expected an array of products but got:", products);
+      console.error('Expected an array of products but got:', products);
       return [];
     }
 
-    return products.map((product: ProductType) => ({
+    return products.map((product: Product) => ({
       id: product.id.toString(),
     }));
   } catch (error) {
-    console.error("Failed to fetch products:", error);
+    console.error('Failed to fetch products:', error);
 
     return [];
   }
@@ -70,7 +65,7 @@ export const generateStaticParams = async () => {
 const MainSection = ({
   discountPrice,
   ...data
-}: ProductType & { discountPrice?: number }) => {
+}: Product & { discountPrice?: number }) => {
   return (
     <>
       <Box component="main" sx={styles.main}>
@@ -79,7 +74,7 @@ const MainSection = ({
             <Box
               component="img"
               src={data.images[0]}
-              alt={"Image"}
+              alt={'Image'}
               loading="lazy"
               sx={styles.image}
             />
@@ -110,7 +105,7 @@ const MainSection = ({
                 color="text.secondary"
                 sx={
                   data.discountPercentage
-                    ? { textDecoration: "line-through" }
+                    ? { textDecoration: 'line-through' }
                     : undefined
                 }
               >
@@ -129,16 +124,16 @@ const MainSection = ({
             variant="body1"
             sx={{
               ...styles.stockStatus,
-              ...(data.availabilityStatus === "Low Stock"
+              ...(data.availabilityStatus === 'Low Stock'
                 ? styles.redText
                 : styles.greenText),
             }}
           >
-            {data.availabilityStatus === "Low Stock"
+            {data.availabilityStatus === 'Low Stock'
               ? `Hurry up! Only ${data.stock} ${
-                  data.stock === 1 ? "item" : "items"
+                  data.stock === 1 ? 'item' : 'items'
                 } left`
-              : "In Stock"}
+              : 'In Stock'}
           </Typography>
 
           <Divider />

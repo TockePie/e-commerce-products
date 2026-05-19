@@ -7,7 +7,7 @@ interface CartState {
   cart: Product[];
 
   toggleCartItem: (product: Product) => void;
-  // cleanCart: () => void;
+  cleanCart: () => void;
 }
 
 export const useCartStore = create<CartState>()(

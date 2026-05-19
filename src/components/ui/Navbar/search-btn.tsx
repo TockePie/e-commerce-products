@@ -21,7 +21,7 @@ export default function SearchBtn() {
         <SearchIcon />
         Search
       </Button>
-      <SearchModal open={open} setOpen={setOpen} />
+      <SearchModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
