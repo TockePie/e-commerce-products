@@ -1,34 +1,41 @@
-"use client";
+'use client';
 
-import React, { useCallback } from "react";
+import React from 'react';
 import {
   Box,
-  Drawer,
-  Typography,
-  Slider,
-  FormControlLabel,
-  FormGroup,
   Button,
-  RadioGroup,
+  Drawer,
+  FormControlLabel,
   Radio,
-} from "@mui/material";
+  RadioGroup,
+  Slider,
+  Typography,
+} from '@mui/material';
 
-import DrawerProps from "@/types/drawer";
+import { FilterState } from '@/app/page';
 
-import { drawer, categories } from "./Drawer.constants";
-import styles from "./Drawer.styles";
+import { categories, drawer } from './Drawer.constants';
+import styles from './Drawer.styles';
 
-const DrawerComponent: React.FC<DrawerProps> = ({
+interface Props {
+  open: boolean;
+  onClose: () => void;
+  filters: FilterState;
+  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+  onReset: () => void;
+}
+
+export default function DrawerComponent({
   open,
-  setOpen,
-  dispatch,
-  selectedCategory,
-  priceRange,
-  rating,
-}) => {
+  onClose,
+  filters,
+  setFilters,
+  onReset,
+}: Props) {
+  const { category, priceRange, rating } = filters;
   const {
     title,
-    category,
+    category: catTitle,
     priceTitle,
     minRating,
     ratingRange,
@@ -36,72 +43,42 @@ const DrawerComponent: React.FC<DrawerProps> = ({
     closeButton,
   } = drawer;
 
-  const takeCheckbox = useCallback(
-    (
-      _: React.ChangeEvent<HTMLInputElement>,
-      checked: boolean,
-      category: string
-    ) => {
-      dispatch({
-        type: "SET_CATEGORY",
-        payload: checked ? category : "",
-      });
-    },
-    [dispatch]
-  );
-
-  const changePriceRange = useCallback(
-    (_: Event, newValue: number | number[]) => {
-      if (Array.isArray(newValue) && newValue.length === 2) {
-        dispatch({
-          type: "SET_PRICE_RANGE",
-          payload: newValue as [number, number],
-        });
-      }
-    },
-    [dispatch]
-  );
-
-  const reset = useCallback(() => {
-    dispatch({ type: "SET_CATEGORY", payload: "" });
-    dispatch({ type: "SET_PRICE_RANGE", payload: [0, 3000] });
-    dispatch({ type: "SET_RATING", payload: null });
-  }, [dispatch]);
-
   return (
-    <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+    <Drawer anchor="left" open={open} onClose={onClose}>
       <Box sx={styles.drawerBox}>
         <Box>
           <Typography variant="h5">{title}</Typography>
 
           <Typography variant="body1" sx={styles.categories}>
-            {category}
+            {catTitle}
           </Typography>
-          <FormGroup>
-            <RadioGroup>
-              {categories.map((category: string) => (
-                <FormControlLabel
-                  key={category}
-                  control={
-                    <Radio
-                      checked={selectedCategory === category}
-                      onChange={(event, checked) =>
-                        takeCheckbox(event, checked, category)
-                      }
-                    />
-                  }
-                  label={category}
-                />
-              ))}
-            </RadioGroup>
-          </FormGroup>
+          <RadioGroup
+            value={category || ''}
+            onChange={(e) =>
+              setFilters((prev) => ({ ...prev, category: e.target.value }))
+            }
+          >
+            {categories.map((cat) => (
+              <FormControlLabel
+                key={cat}
+                value={cat}
+                control={<Radio />}
+                label={cat}
+              />
+            ))}
+          </RadioGroup>
 
           <Typography variant="body1" sx={styles.categories}>
             {priceTitle}
           </Typography>
           <Slider
             value={priceRange}
-            onChange={changePriceRange}
+            onChange={(_, val) =>
+              setFilters((prev) => ({
+                ...prev,
+                priceRange: val as [number, number],
+              }))
+            }
             valueLabelDisplay="auto"
             min={drawer.priceRange.min}
             max={drawer.priceRange.max}
@@ -112,8 +89,8 @@ const DrawerComponent: React.FC<DrawerProps> = ({
           </Typography>
           <Slider
             value={rating ?? 0}
-            onChange={(_, newValue) =>
-              dispatch({ type: "SET_RATING", payload: newValue as number })
+            onChange={(_, val) =>
+              setFilters((prev) => ({ ...prev, rating: val as number }))
             }
             valueLabelDisplay="auto"
             step={ratingRange.step}
@@ -121,21 +98,16 @@ const DrawerComponent: React.FC<DrawerProps> = ({
             max={ratingRange.max}
           />
         </Box>
+
         <Box sx={styles.buttons}>
-          <Button variant="text" color="primary" onClick={reset}>
+          <Button variant="text" onClick={onReset}>
             {resetButton}
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setOpen(false)}
-          >
+          <Button variant="contained" onClick={onClose}>
             {closeButton}
           </Button>
         </Box>
       </Box>
     </Drawer>
   );
-};
-
-export default DrawerComponent;
+}

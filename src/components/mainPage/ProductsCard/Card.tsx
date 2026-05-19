@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, Suspense, useCallback } from 'react';
+import { memo, Suspense } from 'react';
 import {
   Box,
   Card,
@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import Rating from '@/components/ui/Rating';
 import { Product } from '@/types/product';
@@ -30,85 +30,79 @@ const titleStyleForCard = {
 };
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const router = useRouter();
-  const {
-    id,
-    price,
-    discountPercentage,
-    images,
-    title,
-    brand,
-    category,
-    rating,
-  } = product;
-
-  const discount = calculateDiscountedPrice(price, discountPercentage);
-
-  const getTitleStyle = useCallback((title: string) => {
-    return title.length > 20
-      ? titleStyleForCard.smallText
-      : titleStyleForCard.titleText;
-  }, []);
+  const discount = calculateDiscountedPrice(
+    product.price,
+    product.discountPercentage,
+  );
 
   return (
     <Card sx={styles.card}>
-      <CardActionArea
-        sx={styles.actionArea}
-        onClick={() => router.push(`/${id}`)}
-      >
-        <Suspense fallback={<Box>Loading...</Box>}>
-          <Image
-            className={moduleStyles.productImage}
-            src={images[0]}
-            alt={title}
-            width={200}
-            height={200}
-            loading="lazy"
-          />
-        </Suspense>
+      <Link href={`/${product.id}`}>
+        <CardActionArea sx={styles.actionArea}>
+          <Suspense fallback={<Box>Loading...</Box>}>
+            <Image
+              className={moduleStyles.productImage}
+              src={product.images[0]}
+              alt={product.title}
+              width={200}
+              height={200}
+              loading="lazy"
+            />
+          </Suspense>
 
-        <CardContent sx={styles.content}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx={getTitleStyle(title)}
-          >
-            {title}
-          </Typography>
+          <CardContent sx={styles.content}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={
+                product.title.length > 20
+                  ? titleStyleForCard.smallText
+                  : titleStyleForCard.titleText
+              }
+            >
+              {product.title}
+            </Typography>
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={styles.brandText}
-          >
-            {brand}
-          </Typography>
-
-          <Chip label={category} size="small" />
-
-          <Box sx={styles.ratingBox}>
-            <Rating ratingInPercent={rating} iconSize="m" showOutOf={true} />
-          </Box>
-
-          <Box sx={styles.priceBox}>
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{
-                textDecoration: discountPercentage ? 'line-through' : 'none',
-              }}
+              sx={styles.brandText}
             >
-              {`$${price}`}
+              {product.brand}
             </Typography>
-            {discountPercentage && (
-              <Typography variant="body1" color="red">
-                {`$${discount}`}
+
+            <Chip label={product.category} size="small" />
+
+            <Box sx={styles.ratingBox}>
+              <Rating
+                ratingInPercent={product.rating}
+                iconSize="m"
+                showOutOf={true}
+              />
+            </Box>
+
+            <Box sx={styles.priceBox}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  textDecoration: product.discountPercentage
+                    ? 'line-through'
+                    : 'none',
+                }}
+              >
+                {`$${product.price}`}
               </Typography>
-            )}
-          </Box>
-        </CardContent>
-      </CardActionArea>
+              {product.discountPercentage && (
+                <Typography variant="body1" color="red">
+                  {`$${discount}`}
+                </Typography>
+              )}
+            </Box>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   );
 };

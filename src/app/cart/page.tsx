@@ -10,7 +10,7 @@ import calculateDiscountedPrice from '@/utils/calculate-discounted-price';
 import ConfirmBtn from './confirm-btn';
 import styles from './page.styles';
 
-const Cart = () => {
+export default function Cart() {
   const cart = useCartStore((state) => state.cart);
 
   return (
@@ -40,6 +40,4 @@ const Cart = () => {
       <ConfirmBtn />
     </Box>
   );
-};
-
-export default Cart;
+}
