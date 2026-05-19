@@ -1,23 +1,20 @@
-'use server';
-
-import { lazy } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 
 import AddToCart from '@/components/id/AddToCart';
 import ImageCarousel from '@/components/id/ImageCarousel';
+import ProductInfo from '@/components/id/ProductsInfo';
 import ReviewCard from '@/components/id/ReviewCard';
 import Rating from '@/components/ui/Stars/rating';
 import { getProductById } from '@/lib/api';
-import { Product } from '@/types/product';
 import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
 
 import styles from './page.styles';
 
-const ProductsDetails = lazy(
-  () => import('@/components/id/ProductsDetails/ProductsDetails'),
-);
-
-const ProductPage = async ({ params }: { params: { id: number } }) => {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: number };
+}) {
   const { id } = await params;
 
   const product = await getProductById(id);
@@ -35,55 +32,24 @@ const ProductPage = async ({ params }: { params: { id: number } }) => {
     ? calculateDiscountedPrice(product.price, product.discountPercentage)
     : null;
 
-  return <MainSection {...product} discountPrice={discountPrice} />;
-};
-
-export const generateStaticParams = async () => {
-  try {
-    const response = await fetch('https://dummyjson.com/products');
-    const data = await response.json();
-
-    const products = data.products;
-
-    if (!Array.isArray(products)) {
-      console.error('Expected an array of products but got:', products);
-      return [];
-    }
-
-    return products.map((product: Product) => ({
-      id: product.id.toString(),
-    }));
-  } catch (error) {
-    console.error('Failed to fetch products:', error);
-
-    return [];
-  }
-};
-
-const MainSection = ({
-  discountPrice,
-  ...data
-}: Product & { discountPrice: number | null }) => {
   return (
     <>
       <Box component="main" sx={styles.main}>
-        <Box sx={styles.imageBox}>
-          <ImageCarousel images={data.images} />
-        </Box>
+        <ImageCarousel images={product.images} />
 
-        <Box sx={styles.contentBox}>
-          <Typography variant="h4">{data.title}</Typography>
+        <Box sx={styles.content}>
+          <Typography variant="h4">{product.title}</Typography>
 
           <Box sx={styles.ratingBox}>
             <Typography variant="body1">
-              {data.rating && `${data.rating}`}
+              {product.rating && `${product.rating}`}
             </Typography>
             <Rating
-              ratingInPercent={data.rating}
+              ratingInPercent={product.rating}
               iconSize="l"
               showOutOf={true}
             />
-            <Typography variant="body1">{`(${data.reviews.length} reviews)`}</Typography>
+            <Typography variant="body1">{`(${product.reviews.length} reviews)`}</Typography>
           </Box>
 
           <Box sx={styles.priceAndCartBox}>
@@ -92,45 +58,45 @@ const MainSection = ({
                 variant="body2"
                 color="text.secondary"
                 sx={
-                  data.discountPercentage
+                  product.discountPercentage
                     ? { textDecoration: 'line-through' }
                     : undefined
                 }
               >
-                {`$${data.price}`}
+                {`$${product.price}`}
               </Typography>
-              {data.discountPercentage && (
+              {product.discountPercentage && (
                 <Typography variant="h5" color="red">
                   {`$${discountPrice}`}
                 </Typography>
               )}
             </Box>
-            <AddToCart data={data} />
+            <AddToCart product={product} />
           </Box>
 
           <Typography
             variant="body1"
             sx={{
               ...styles.stockStatus,
-              ...(data.availabilityStatus === 'Low Stock'
+              ...(product.availabilityStatus === 'Low Stock'
                 ? styles.redText
                 : styles.greenText),
             }}
           >
-            {data.availabilityStatus === 'Low Stock'
-              ? `Hurry up! Only ${data.stock} ${
-                  data.stock === 1 ? 'item' : 'items'
+            {product.availabilityStatus === 'Low Stock'
+              ? `Hurry up! Only ${product.stock} ${
+                  product.stock === 1 ? 'item' : 'items'
                 } left`
               : 'In Stock'}
           </Typography>
 
           <Divider />
-          <ProductsDetails {...data} />
+          <ProductInfo product={{ ...product }} />
           <Divider />
 
           <Box sx={styles.description}>
             <Typography variant="h5">Description</Typography>
-            <Typography variant="body1">{data.description}</Typography>
+            <Typography variant="body1">{product.description}</Typography>
           </Box>
         </Box>
       </Box>
@@ -141,13 +107,11 @@ const MainSection = ({
         </Typography>
 
         <Box sx={styles.reviews.container}>
-          {data.reviews.map((review, index) => (
+          {product.reviews.map((review, index) => (
             <ReviewCard key={review.comment} review={review} index={index} />
           ))}
         </Box>
       </Box>
     </>
   );
-};
-
-export default ProductPage;
+}

@@ -14,34 +14,7 @@ const styles = {
       padding: '1rem',
     },
   },
-  imageBox: {
-    width: '50%',
-    height: '80vh',
-    display: 'flex',
-    flexDirection: 'column',
-
-    '@media (max-width: 768px)': {
-      width: '100%',
-      height: '50vh',
-    },
-
-    '@media (min-width: 1536px)': {
-      height: '35rem',
-    },
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'contain',
-    transition: 'transform 0.5s ease-in-out',
-  },
-  backToHome: {
-    position: 'absolute',
-    top: 100,
-    left: 20,
-    zIndex: 1,
-  },
-  contentBox: {
+  content: {
     display: 'flex',
     flexDirection: 'column',
     width: '50%',
@@ -78,11 +51,6 @@ const styles = {
     flexDirection: 'column',
     marginTop: 2,
     gap: 2,
-  },
-  loadingPage: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
   },
 
   reviews: {

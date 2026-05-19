@@ -23,13 +23,15 @@ const ImageCarousel = memo(({ images }: { images: string[] }) => {
   if (total === 0) return null;
   if (total === 1) {
     return (
-      <Box
-        component="img"
-        src={images[0]}
-        alt="Slide 0"
-        loading="lazy"
-        sx={styles.imgBox}
-      />
+      <Box sx={styles.imgBox}>
+        <Box
+          component="img"
+          src={images[0]}
+          alt="Slide 0"
+          loading="lazy"
+          sx={styles.img}
+        />
+      </Box>
     );
   }
 
@@ -38,16 +40,16 @@ const ImageCarousel = memo(({ images }: { images: string[] }) => {
   };
 
   return (
-    <>
+    <Box sx={styles.imgBox}>
       <Box
         component="img"
         src={images[currentImage]}
         alt={`Slide ${currentImage}`}
         loading="lazy"
-        sx={styles.imgBox}
+        sx={styles.img}
       />
 
-      <Box sx={styles.contentBox}>
+      <Box sx={styles.content}>
         <IconButton onClick={() => navigate(-1)} sx={styles.backButton}>
           <ArrowBack />
         </IconButton>
@@ -69,7 +71,7 @@ const ImageCarousel = memo(({ images }: { images: string[] }) => {
           <ArrowForward />
         </IconButton>
       </Box>
-    </>
+    </Box>
   );
 });
 

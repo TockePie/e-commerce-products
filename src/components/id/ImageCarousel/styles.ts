@@ -1,32 +1,47 @@
 const styles = {
   imgBox: {
-    width: "100%",
-    height: "100%",
-    objectFit: "contain",
-    transition: "transform 0.5s ease-in-out",
+    width: '50%',
+    height: '80vh',
+    display: 'flex',
+    flexDirection: 'column',
+
+    '@media (max-width: 768px)': {
+      width: '100%',
+      height: '50vh',
+    },
+
+    '@media (min-width: 1536px)': {
+      height: '35rem',
+    },
   },
-  contentBox: {
-    display: "flex",
-    justifyContent: "space-around",
+  img: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    transition: 'transform 0.5s ease-in-out',
+  },
+  content: {
+    display: 'flex',
+    justifyContent: 'space-around',
   },
   backButton: {
-    backgroundColor: "rgba(0,0,0,0.5)",
-    color: "white",
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    color: 'white',
   },
   dotsBox: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   },
   dots: {
-    width: "10px",
-    height: "10px",
-    borderRadius: "50%",
-    margin: "0 5px",
-    cursor: "pointer",
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    margin: '0 5px',
+    cursor: 'pointer',
   },
   forwardButton: {
-    backgroundColor: "rgba(0,0,0,0.5)",
-    color: "white",
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    color: 'white',
   },
 };
 

@@ -1,7 +1,7 @@
-import { ProductType } from '@/types/product';
+import { Product } from '@/types/product';
 
 interface FilterProductsParams {
-  products: ProductType[];
+  products: Product[];
   selectedCategory?: string | null;
   priceRange: [number, number];
   rating?: number | null;

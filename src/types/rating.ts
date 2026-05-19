@@ -4,7 +4,7 @@ type RatingType = {
   showOutOf: boolean;
 };
 
-type IconType = "ratingHighlighted" | "ratingDefault";
+type IconType = 'ratingHighlighted' | 'ratingDefault';
 
 type StarComponentType = {
   type: IconType;
@@ -12,4 +12,4 @@ type StarComponentType = {
   height: number;
 };
 
-export type { RatingType, IconType, StarComponentType };
+export type { IconType, RatingType, StarComponentType };
