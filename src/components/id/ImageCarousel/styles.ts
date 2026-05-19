@@ -2,48 +2,56 @@ import { StylesType } from '@/types/mui';
 
 const styles = {
   imgBox: {
-    width: '50%',
-    height: '80vh',
-    display: 'flex',
-    flexDirection: 'column',
-
-    '@media (max-width: 768px)': {
-      width: '100%',
-      height: '50vh',
-    },
-
-    '@media (min-width: 1536px)': {
-      height: '35rem',
-    },
+    position: 'relative',
+    width: { xs: '100%', md: '50%' },
+    height: { xs: '50vh', md: '80vh', '2xl': '35rem' },
+    overflow: 'hidden',
+    borderRadius: 2,
+    backgroundColor: 'background.default',
   },
   img: {
     width: '100%',
     height: '100%',
     objectFit: 'contain',
-    transition: 'transform 0.5s ease-in-out',
   },
   content: {
     display: 'flex',
     justifyContent: 'space-around',
   },
-  backButton: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    color: 'white',
-  },
   dotsBox: {
+    position: 'absolute',
+    bottom: 16,
+    left: '50%',
+    transform: 'translateX(-50%)',
     display: 'flex',
-    alignItems: 'center',
+    gap: 1,
+    p: 1,
+    borderRadius: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   dots: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '50%',
-    margin: '0 5px',
+    height: 8,
+    borderRadius: 4,
     cursor: 'pointer',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  },
+  backButton: {
+    position: 'absolute',
+    top: '50%',
+    left: 16,
+    transform: 'translateY(-50%)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    color: 'common.white',
+    '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
   },
   forwardButton: {
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    color: 'white',
+    position: 'absolute',
+    top: '50%',
+    right: 16,
+    transform: 'translateY(-50%)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    color: 'common.white',
+    '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
   },
 } satisfies StylesType;
 

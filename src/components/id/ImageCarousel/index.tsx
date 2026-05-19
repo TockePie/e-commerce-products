@@ -61,7 +61,10 @@ const ImageCarousel = memo(({ images }: { images: string[] }) => {
               onClick={() => setCurrentImage(index)}
               sx={{
                 ...styles.dots,
-                backgroundColor: index === currentImage ? '#1976D2' : 'gray',
+                width: index === currentImage ? 24 : 8,
+                backgroundColor:
+                  index === currentImage ? 'primary.main' : 'common.white',
+                opacity: index === currentImage ? 1 : 0.5,
               }}
             />
           ))}

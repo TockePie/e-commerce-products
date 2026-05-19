@@ -18,7 +18,7 @@ export default async function ProductPage({
   const { id } = await params;
 
   const product = await getProductById(id);
-  if (!product || Array.isArray(product)) {
+  if (!product) {
     return (
       <Box component="main" sx={styles.main}>
         <Typography variant="h5" color="error">
