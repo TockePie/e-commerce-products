@@ -1,3 +1,5 @@
+import { StylesType } from '@/types/mui';
+
 const styles = {
   imgBox: {
     width: '50%',
@@ -43,6 +45,6 @@ const styles = {
     backgroundColor: 'rgba(0,0,0,0.5)',
     color: 'white',
   },
-};
+} satisfies StylesType;
 
 export default styles;

@@ -5,7 +5,7 @@ import { Box, Input, List, Modal, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProducts } from '@/lib/api';
-import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
+import calculateDiscountedPrice from '@/utils/calculate-discounted-price';
 
 import SearchItem from './search-item';
 import styles from './styles';

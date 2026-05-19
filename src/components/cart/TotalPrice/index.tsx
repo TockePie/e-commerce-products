@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
 
 import { Product } from '@/types/product';
-import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
+import calculateDiscountedPrice from '@/utils/calculate-discounted-price';
 
 import styles from './styles';
 
-const TotalPrice = ({ cart }: { cart: Product[] }) => {
+export default function TotalPrice({ cart }: { cart: Product[] }) {
   return (
     <Box sx={styles.main}>
       <Typography variant="h5" sx={{ fontWeight: 400 }}>
@@ -26,6 +26,4 @@ const TotalPrice = ({ cart }: { cart: Product[] }) => {
       </Typography>
     </Box>
   );
-};
-
-export default TotalPrice;
+}

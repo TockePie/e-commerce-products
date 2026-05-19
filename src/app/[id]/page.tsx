@@ -4,9 +4,9 @@ import AddToCart from '@/components/id/AddToCart';
 import ImageCarousel from '@/components/id/ImageCarousel';
 import ProductInfo from '@/components/id/ProductsInfo';
 import ReviewCard from '@/components/id/ReviewCard';
-import Rating from '@/components/ui/Stars/rating';
+import Rating from '@/components/ui/Rating';
 import { getProductById } from '@/lib/api';
-import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
+import calculateDiscountedPrice from '@/utils/calculate-discounted-price';
 
 import styles from './page.styles';
 

@@ -9,7 +9,6 @@ import ProductCard from '@/components/mainPage/ProductsCard/Card';
 import usePages from '@/hooks/use-pages';
 import { getProducts } from '@/lib/api';
 import { Product } from '@/types/product';
-import filterProducts from '@/utils/filterProducts';
 
 import Loading from './loading';
 import { initialState, reducer } from './page.reducer';
@@ -28,11 +27,15 @@ export default function Home() {
   });
 
   const filteredProducts = useMemo(() => {
-    return filterProducts({
-      products: data,
-      selectedCategory,
-      priceRange,
-      rating,
+    return data.filter((product) => {
+      const categoryMatch = selectedCategory
+        ? product.category === selectedCategory
+        : true;
+      const priceMatch =
+        product.price >= priceRange[0] && product.price <= priceRange[1];
+      const ratingMatch = rating ? product.rating >= rating : true;
+
+      return categoryMatch && priceMatch && ratingMatch;
     });
   }, [data, selectedCategory, priceRange, rating]);
 
@@ -82,7 +85,7 @@ const MainSection = ({ data }: { data: Product[] }) => {
         sx={styles.gridContainer}
       >
         {currentProducts.map((product, index) => (
-          <Grid key={index} item xs={2} sm={4} md={4} sx={styles.grid}>
+          <Grid key={index} xs={2} sm={4} md={4} sx={styles.grid}>
             <ProductCard product={product as Product} />
           </Grid>
         ))}

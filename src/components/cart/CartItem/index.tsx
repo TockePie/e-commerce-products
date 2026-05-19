@@ -32,6 +32,7 @@ export default function CartItem({ product, discount }: Props) {
               color="text.secondary"
             >{`x${product.minimumOrderQuantity}`}</Typography>
           </Box>
+
           <Box sx={styles.priceBox}>
             <Typography
               variant="body2"

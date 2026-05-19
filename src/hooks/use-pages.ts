@@ -2,8 +2,12 @@
 
 import { useMemo, useReducer } from 'react';
 
-import { ImageCarouselAction } from '@/types/imageCarousel';
 import { Product } from '@/types/product';
+
+interface ImageCarouselAction {
+  type: 'NEXT' | 'PREV' | 'SET';
+  payload?: number;
+}
 
 const reducer = (state: number, action: ImageCarouselAction) => {
   switch (action.type) {

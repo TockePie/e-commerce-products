@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Typography } from '@mui/material';
 
-import Rating from '@/components/ui/Stars/rating';
+import Rating from '@/components/ui/Rating';
 import { Review } from '@/types/product';
 
 import styles from './styles';

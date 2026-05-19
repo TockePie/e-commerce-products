@@ -1,8 +1,6 @@
-"use client";
+'use client';
 
-import { Suspense, memo, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { memo, Suspense, useCallback } from 'react';
 import {
   Box,
   Card,
@@ -10,26 +8,28 @@ import {
   CardContent,
   Chip,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import Rating from "@/components/ui/Stars/rating";
+import Rating from '@/components/ui/Rating';
+import { Product } from '@/types/product';
+import calculateDiscountedPrice from '@/utils/calculate-discounted-price';
 
-import calculateDiscountedPrice from "@/utils/calculateDiscountedPrice";
-import ProductProps from "@/types/product";
+import styles from './Card.styles';
 
-import styles from "./Card.styles";
-import moduleStyles from "./Card.module.scss";
+import moduleStyles from './Card.module.scss';
 
 const titleStyleForCard = {
   titleText: {
-    fontSize: "1.2rem",
+    fontSize: '1.2rem',
   },
   smallText: {
-    fontSize: "1rem",
+    fontSize: '1rem',
   },
 };
 
-const ProductCard = ({ product }: ProductProps) => {
+const ProductCard = ({ product }: { product: Product }) => {
   const router = useRouter();
   const {
     id,
@@ -96,7 +96,7 @@ const ProductCard = ({ product }: ProductProps) => {
               variant="body2"
               color="text.secondary"
               sx={{
-                textDecoration: discountPercentage ? "line-through" : "none",
+                textDecoration: discountPercentage ? 'line-through' : 'none',
               }}
             >
               {`$${price}`}
