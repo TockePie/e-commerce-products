@@ -1,9 +1,11 @@
 'use server';
 
-import React from 'react';
+import { lazy } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 
 import AddToCart from '@/components/id/AddToCart';
+import ImageCarousel from '@/components/id/ImageCarousel';
+import ReviewCard from '@/components/id/ReviewCard';
 import Rating from '@/components/ui/Stars/rating';
 import { getProductById } from '@/lib/api';
 import { Product } from '@/types/product';
@@ -11,22 +13,18 @@ import calculateDiscountedPrice from '@/utils/calculateDiscountedPrice';
 
 import styles from './page.styles';
 
-const ImageCarousel = React.lazy(
-  () => import('@/components/id/ImageCarousel/ImageCarousel'),
-);
-const ProductsDetails = React.lazy(
+const ProductsDetails = lazy(
   () => import('@/components/id/ProductsDetails/ProductsDetails'),
 );
-const Reviews = React.lazy(() => import('@/components/id/Reviews/Reviews'));
 
 const ProductPage = async ({ params }: { params: { id: number } }) => {
   const { id } = await params;
-  const product = await getProductById(id);
 
+  const product = await getProductById(id);
   if (!product || Array.isArray(product)) {
     return (
       <Box component="main" sx={styles.main}>
-        <Typography variant="body1" color="error">
+        <Typography variant="h5" color="error">
           Failed to load product details.
         </Typography>
       </Box>
@@ -35,7 +33,7 @@ const ProductPage = async ({ params }: { params: { id: number } }) => {
 
   const discountPrice = product.discountPercentage
     ? calculateDiscountedPrice(product.price, product.discountPercentage)
-    : undefined;
+    : null;
 
   return <MainSection {...product} discountPrice={discountPrice} />;
 };
@@ -65,22 +63,12 @@ export const generateStaticParams = async () => {
 const MainSection = ({
   discountPrice,
   ...data
-}: Product & { discountPrice?: number }) => {
+}: Product & { discountPrice: number | null }) => {
   return (
     <>
       <Box component="main" sx={styles.main}>
         <Box sx={styles.imageBox}>
-          {data.images.length === 1 ? (
-            <Box
-              component="img"
-              src={data.images[0]}
-              alt={'Image'}
-              loading="lazy"
-              sx={styles.image}
-            />
-          ) : (
-            <ImageCarousel images={data.images} />
-          )}
+          <ImageCarousel images={data.images} />
         </Box>
 
         <Box sx={styles.contentBox}>
@@ -147,7 +135,17 @@ const MainSection = ({
         </Box>
       </Box>
 
-      <Reviews {...data} />
+      <Box sx={styles.reviews.box}>
+        <Typography variant="h5" sx={styles.reviews.title}>
+          Reviews
+        </Typography>
+
+        <Box sx={styles.reviews.container}>
+          {data.reviews.map((review, index) => (
+            <ReviewCard key={review.comment} review={review} index={index} />
+          ))}
+        </Box>
+      </Box>
     </>
   );
 };
