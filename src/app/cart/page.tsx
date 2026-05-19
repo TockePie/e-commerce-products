@@ -31,7 +31,9 @@ export default function Cart() {
             ))}
           </List>
         ) : (
-          <Typography variant="h6">Your cart is empty.</Typography>
+          <Typography variant="h6" sx={styles.emptyText}>
+            Your cart is empty.
+          </Typography>
         )}
       </Box>
 

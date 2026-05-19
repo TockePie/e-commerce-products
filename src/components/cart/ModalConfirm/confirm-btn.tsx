@@ -9,6 +9,7 @@ import ModalConfirm from '.';
 
 export default function ConfirmBtn() {
   const [open, setOpen] = useState(false);
+
   const cleanCart = useCartStore((state) => state.cleanCart);
 
   return (
@@ -18,7 +19,10 @@ export default function ConfirmBtn() {
       </Button>
       <ModalConfirm
         open={open}
-        onConfirm={() => cleanCart()}
+        onConfirm={() => {
+          setOpen(false);
+          cleanCart();
+        }}
         onCancel={() => setOpen(false)}
       />
     </>

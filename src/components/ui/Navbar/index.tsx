@@ -11,14 +11,15 @@ export default function Navbar() {
   return (
     <AppBar component="nav">
       <Toolbar sx={styles.toolbar}>
-        <Box sx={styles.leftBox}>
-          <Link href="/">
+        <Link href="/">
+          <Box sx={styles.leftBox}>
             <ShoppingBasketIcon sx={styles.shoppingBasket} />
-          </Link>
-          <Typography variant="h5" sx={styles.typography}>
-            Online Shop
-          </Typography>
-        </Box>
+
+            <Typography variant="h5" sx={styles.typography}>
+              Online Shop
+            </Typography>
+          </Box>
+        </Link>
 
         <Box sx={styles.rightBox}>
           <SearchBtn />

@@ -5,40 +5,25 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: '3.5rem',
+    marginTop: { xs: '3.5rem', xl: '4rem' },
     gap: '2rem',
-    padding: '3rem',
-
-    //FIXME
-    '@media (max-width: 767px)': {
-      padding: '2rem 1rem',
+    padding: {
+      xs: '2rem 1rem',
+      md: '2rem 7vw',
+      lg: '2rem 4vw',
     },
-
-    '@media (min-width: 768px) and (max-width: 1023px)': {
-      padding: '2rem 1rem',
-    },
-
-    '@media (min-width: 1024px) and (max-width: 1279px)': {
-      padding: '2rem 7vw',
-    },
-
-    '@media (min-width: 1280px) and (max-width: 1535px)': {
-      padding: '2rem 4vw',
-      marginLeft: '20vw',
-      marginRight: '20vw',
-    },
-
-    '@media (min-width: 1536px)': {
-      marginTop: '4rem',
-      marginLeft: '20vw',
-      marginRight: '20vw',
-    },
+    marginLeft: { lg: '20vw' },
+    marginRight: { lg: '20vw' },
+  },
+  emptyText: {
+    padding: '2rem',
+    textAlign: 'center',
+    width: '100%',
   },
   cart: {
     display: 'flex',
     flexDirection: 'column',
     gap: 1,
-    p: 1,
     border: '1px solid',
     borderColor: 'divider',
     borderRadius: 2,

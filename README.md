@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 E-Commerce Products
+
+### Technical Assessment | Student Council Development Dept.
+
+**Context:** Developed as a competitive entry task for the FICE Student Council Dev Department.
+**Project Goal:** Successfully demonstrated technical proficiency in building production-ready, high-performance frontend interfaces under a strict deadline.
+
+## Recent Updates & Optimizations
+
+The project was recently refactored to optimize performance, clean up technical debt, and streamline the bundle size:
+
+- **Simplified Architecture:** Removed heavy, unnecessary libraries to rely on clean, core modern APIs.
+- **Next-Gen React & Framework Stack:** Upgraded to **React 19** and **Next.js 16** to leverage the latest framework optimizations, including utilizing **Turbopack** for blazing-fast local development compilation.
+
+## Tech Stack & Ecosystem
+
+### Core Architecture
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript for strong type-safety across product structures, filters, and UI properties.
+- **UI & Styling:** Material UI (MUI v9) powered by Emotion (`@emotion/react`, `@emotion/styled`) for component styling and custom theming.
+
+### State Management & Data Fetching
+
+- **Server State:** `@tanstack/react-query` (v5) coupled with `axios` for seamless asynchronous server queries, automatic caching, and background data synchronization.
+- **Client State:** `zustand` (v5) acts as a lightweight, lightning-fast store to handle local interactions (like shopping cart mutations and filter flags).
+
+### Code Quality & Formatting
+
+- Strict linting configuration using **ESLint 9** coupled with specialized rules like `eslint-plugin-simple-import-sort` and `@tanstack/eslint-plugin-query` to enforce robust development practices.
+- Formatted seamlessly via **Prettier**.
+
+## Key Features
+
+- **Polished Professional UI:** Built entirely utilizing Material UI components with responsive layout structures and unified design tokens.
+- **Dynamic Search & Filtering:** Sophisticated product exploration capabilities allowing instant search and granular client-side product filtering.
+- **Optimized Reusability:** Rigid atomic component-based design pattern guaranteeing maximum modular code reuse, readability, and maintenance.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+
+```bash
+npm install
+
+```
+
+2. **Run the development server (with Turbopack enablement):**
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) inside your browser to interact with the catalog application.
