@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { Button } from '@mui/material';
 
-import ModalConfirm from '@/components/cart/ModalConfirm';
 import { useCartStore } from '@/hooks/use-cart-store';
+
+import ModalConfirm from '.';
 
 export default function ConfirmBtn() {
   const [open, setOpen] = useState(false);

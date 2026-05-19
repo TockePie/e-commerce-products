@@ -3,11 +3,11 @@
 import { Box, List, Typography } from '@mui/material';
 
 import CartItem from '@/components/cart/CartItem';
+import ConfirmBtn from '@/components/cart/ModalConfirm/confirm-btn';
 import TotalPrice from '@/components/cart/TotalPrice';
 import { useCartStore } from '@/hooks/use-cart-store';
 import calculateDiscountedPrice from '@/utils/calculate-discounted-price';
 
-import ConfirmBtn from './confirm-btn';
 import styles from './page.styles';
 
 export default function Cart() {
