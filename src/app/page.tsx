@@ -1,95 +1,72 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Box, Typography } from '@mui/material';
 
-export default function Home() {
+import DrawerBtn from '@/components/mainPage/Drawer/drawer-btn';
+import ProductCardList from '@/components/mainPage/ProductCardList';
+import { getProducts } from '@/lib/api';
+
+import styles from './page.styles';
+
+interface Props {
+  searchParams: Promise<{
+    category?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    rating?: string;
+    page?: string;
+  }>;
+}
+
+export default async function Home({ searchParams }: Props) {
+  const params = await searchParams;
+
+  const category = params.category || null;
+  const minPrice = Number(params.minPrice || 0);
+  const maxPrice = Number(params.maxPrice || 3000);
+  const rating = params.rating ? Number(params.rating) : null;
+  const currentPage = Number(params.page || 1);
+  const itemsPerPage = 10;
+
+  const allProducts = await getProducts();
+
+  const filteredProducts = allProducts.filter((product) => {
+    const categoryMatch = !category || product.category === category;
+    const priceMatch = product.price >= minPrice && product.price <= maxPrice;
+    const ratingMatch = !rating || product.rating >= rating;
+
+    return categoryMatch && priceMatch && ratingMatch;
+  });
+
+  const totalPages = Math.max(
+    Math.ceil(filteredProducts.length / itemsPerPage),
+    1,
+  );
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredProducts.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <Box component="main" sx={styles.main}>
+      <Box sx={styles.title}>
+        <Typography variant="h4">
+          Found {filteredProducts.length} products
+        </Typography>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <DrawerBtn
+          initialFilters={{
+            category,
+            priceRange: [minPrice, maxPrice],
+            rating,
+          }}
+        />
+      </Box>
+
+      <ProductCardList
+        products={currentItems}
+        totalPages={totalPages}
+        currentPage={currentPage}
+      />
+    </Box>
   );
 }
