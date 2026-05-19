@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -11,28 +11,61 @@ import {
   Slider,
   Typography,
 } from '@mui/material';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { FilterState } from '@/app/page';
+import { FilterState } from '@/types/filter-state';
 
-import { categories, drawer } from './Drawer.constants';
-import styles from './Drawer.styles';
+import { categories, drawer } from './constants';
+import styles from './styles';
 
 interface Props {
   open: boolean;
   onClose: () => void;
-  filters: FilterState;
-  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-  onReset: () => void;
+  initialFilters: FilterState;
 }
 
 export default function DrawerComponent({
   open,
   onClose,
-  filters,
-  setFilters,
-  onReset,
+  initialFilters,
 }: Props) {
-  const { category, priceRange, rating } = filters;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [category, setCategory] = useState(initialFilters.category);
+  const [priceRange, setPriceRange] = useState(initialFilters.priceRange);
+  const [rating, setRating] = useState(initialFilters.rating);
+
+  const handleApplyFilters = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    const filterMappings = {
+      category: category || null,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
+      rating: rating || null,
+      page: '1',
+    };
+
+    Object.entries(filterMappings).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        params.set(key, value.toString());
+      } else {
+        params.delete(key);
+      }
+    });
+
+    params.set('page', '1');
+
+    router.push(`?${params.toString()}`);
+    onClose();
+  };
+
+  const handleReset = () => {
+    router.push('/');
+    onClose();
+  };
+
   const {
     title,
     category: catTitle,
@@ -54,9 +87,7 @@ export default function DrawerComponent({
           </Typography>
           <RadioGroup
             value={category || ''}
-            onChange={(e) =>
-              setFilters((prev) => ({ ...prev, category: e.target.value }))
-            }
+            onChange={(e) => setCategory(e.target.value)}
           >
             {categories.map((cat) => (
               <FormControlLabel
@@ -73,12 +104,7 @@ export default function DrawerComponent({
           </Typography>
           <Slider
             value={priceRange}
-            onChange={(_, val) =>
-              setFilters((prev) => ({
-                ...prev,
-                priceRange: val as [number, number],
-              }))
-            }
+            onChange={(_, val) => setPriceRange(val as [number, number])}
             valueLabelDisplay="auto"
             min={drawer.priceRange.min}
             max={drawer.priceRange.max}
@@ -89,9 +115,7 @@ export default function DrawerComponent({
           </Typography>
           <Slider
             value={rating ?? 0}
-            onChange={(_, val) =>
-              setFilters((prev) => ({ ...prev, rating: val as number }))
-            }
+            onChange={(_, val) => setRating(val as number)}
             valueLabelDisplay="auto"
             step={ratingRange.step}
             min={ratingRange.min}
@@ -100,10 +124,10 @@ export default function DrawerComponent({
         </Box>
 
         <Box sx={styles.buttons}>
-          <Button variant="text" onClick={onReset}>
+          <Button variant="text" onClick={handleReset}>
             {resetButton}
           </Button>
-          <Button variant="contained" onClick={onClose}>
+          <Button variant="contained" onClick={handleApplyFilters}>
             {closeButton}
           </Button>
         </Box>

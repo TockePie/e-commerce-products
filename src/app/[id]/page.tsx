@@ -66,7 +66,7 @@ export default async function ProductPage({
                 {`$${product.price}`}
               </Typography>
               {product.discountPercentage && (
-                <Typography variant="h5" color="red">
+                <Typography variant="h5" color="error">
                   {`$${discountPrice}`}
                 </Typography>
               )}

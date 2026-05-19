@@ -46,7 +46,7 @@ export default function CartItem({ product, discount }: Props) {
               {`$${(product.price * product.minimumOrderQuantity).toFixed(2)}`}
             </Typography>
             {product.discountPercentage && (
-              <Typography variant="body1" color="red">
+              <Typography variant="body1" color="error">
                 {`$${(discount * product.minimumOrderQuantity).toFixed(2)}`}
               </Typography>
             )}

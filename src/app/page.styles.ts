@@ -5,31 +5,16 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: '3.5rem',
+    marginTop: { xs: '3.5rem', xl: '4rem' },
+    marginLeft: { xl: '5vw' },
+    marginRight: { xl: '5vw' },
     gap: '2rem',
-    padding: '3rem',
-
-    //FIXME
-    '@media (max-width: 767px)': {
-      padding: '2rem 1rem',
-    },
-
-    '@media (min-width: 768px) and (max-width: 1023px)': {
-      padding: '2rem 1rem',
-    },
-
-    '@media (min-width: 1024px) and (max-width: 1279px)': {
-      padding: '2rem 7vw',
-    },
-
-    '@media (min-width: 1280px) and (max-width: 1535px)': {
-      padding: '2rem 4vw',
-    },
-
-    '@media (min-width: 1536px)': {
-      marginTop: '4rem',
-      marginLeft: '5vw',
-      marginRight: '5vw',
+    padding: {
+      xs: '2rem 1rem',
+      sm: '2rem 1rem',
+      md: '2rem 7vw',
+      lg: '2rem 4vw',
+      xl: '3rem',
     },
   },
   title: {
@@ -42,14 +27,6 @@ const styles = {
       flexDirection: 'column',
       gap: '0.5rem',
     },
-  },
-  gridContainer: {
-    alignItems: 'center',
-  },
-  grid: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
   },
 
   loading: {

@@ -1,114 +1,72 @@
-'use client';
+import { Box, Typography } from '@mui/material';
 
-import { useEffect, useMemo, useState } from 'react';
-import { Box, Button, Grid, Pagination, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-
-import DrawerComponent from '@/components/mainPage/Drawer/Drawer';
-import ProductCard from '@/components/mainPage/ProductsCard/Card';
+import DrawerBtn from '@/components/mainPage/Drawer/drawer-btn';
+import ProductCardList from '@/components/mainPage/ProductCardList';
 import { getProducts } from '@/lib/api';
-import { Product } from '@/types/product';
 
-import Loading from './loading';
 import styles from './page.styles';
 
-const initialFilters = {
-  category: null as string | null,
-  priceRange: [0, 3000] as [number, number],
-  rating: null as number | null,
-};
+interface Props {
+  searchParams: Promise<{
+    category?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    rating?: string;
+    page?: string;
+  }>;
+}
 
-export type FilterState = typeof initialFilters;
+export default async function Home({ searchParams }: Props) {
+  const params = await searchParams;
 
-export default function Home() {
-  const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const category = params.category || null;
+  const minPrice = Number(params.minPrice || 0);
+  const maxPrice = Number(params.maxPrice || 3000);
+  const rating = params.rating ? Number(params.rating) : null;
+  const currentPage = Number(params.page || 1);
+  const itemsPerPage = 10;
 
-  const { data = [], isLoading } = useQuery({
-    queryKey: ['products'],
-    queryFn: getProducts,
-    staleTime: 1000 * 60 * 5,
+  const allProducts = await getProducts();
+
+  const filteredProducts = allProducts.filter((product) => {
+    const categoryMatch = !category || product.category === category;
+    const priceMatch = product.price >= minPrice && product.price <= maxPrice;
+    const ratingMatch = !rating || product.rating >= rating;
+
+    return categoryMatch && priceMatch && ratingMatch;
   });
 
-  const filteredProducts = useMemo(() => {
-    return data.filter((product) => {
-      const categoryMatch =
-        !filters.category || product.category === filters.category;
-      const priceMatch =
-        product.price >= filters.priceRange[0] &&
-        product.price <= filters.priceRange[1];
-      const ratingMatch = !filters.rating || product.rating >= filters.rating;
-
-      return categoryMatch && priceMatch && ratingMatch;
-    });
-  }, [data, filters]);
+  const totalPages = Math.max(
+    Math.ceil(filteredProducts.length / itemsPerPage),
+    1,
+  );
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredProducts.slice(
+    startIndex,
+    startIndex + itemsPerPage,
+  );
 
   return (
     <Box component="main" sx={styles.main}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <DrawerComponent
-            open={open}
-            onClose={() => setOpen(false)}
-            filters={filters}
-            setFilters={setFilters}
-            onReset={() => setFilters(initialFilters)}
-          />
-          <Box sx={styles.title}>
-            <Typography variant="h4">
-              Found {filteredProducts.length} products
-            </Typography>
-            <Button onClick={() => setOpen(true)}>Filter</Button>
-          </Box>
+      <Box sx={styles.title}>
+        <Typography variant="h4">
+          Found {filteredProducts.length} products
+        </Typography>
 
-          <MainSection data={filteredProducts} />
-        </>
-      )}
+        <DrawerBtn
+          initialFilters={{
+            category,
+            priceRange: [minPrice, maxPrice],
+            rating,
+          }}
+        />
+      </Box>
+
+      <ProductCardList
+        products={currentItems}
+        totalPages={totalPages}
+        currentPage={currentPage}
+      />
     </Box>
   );
 }
-
-const MainSection = ({ data }: { data: Product[] }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  const totalPages = useMemo(
-    () => Math.max(Math.ceil(data.length / itemsPerPage), 1),
-    [data.length, itemsPerPage],
-  );
-
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(1);
-    }
-  }, [data.length, totalPages, currentPage]);
-
-  const currentItems = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return data.slice(startIndex, startIndex + itemsPerPage);
-  }, [data, itemsPerPage, currentPage]);
-
-  return (
-    <>
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 1, sm: 8, md: 8, lg: 12 }}
-        sx={styles.gridContainer}
-      >
-        {currentItems.map((product) => (
-          <Grid key={product.id} xs={2} sm={4} md={4} sx={styles.grid}>
-            <ProductCard product={product} />
-          </Grid>
-        ))}
-      </Grid>
-      <Pagination
-        count={totalPages}
-        page={currentPage}
-        onChange={(_, page) => setCurrentPage(page)}
-      />
-    </>
-  );
-};
